@@ -1,0 +1,9 @@
+#
+# Global application properties, common to all profiles
+#
+# Spring
+spring:
+    application:
+        name: PortoZocaWS
+    messages:
+        basename: strings/messages

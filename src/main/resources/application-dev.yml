@@ -1,0 +1,47 @@
+#
+# Development only properties
+#
+# Server
+server:
+    port: 8090
+# Spring
+spring:
+    h2:
+        console: true
+# Enable Devtools
+    devtools:
+        restart:
+            enabled: true
+        livereload:
+            enabled: true
+# Spring Datasource
+    datasource:
+        initialization-mode: always
+        driver-class-name: org.h2.Driver
+        url: jdbc:h2:mem:testdb
+        username: sa
+        password:
+# Hikari Connection Pool
+        hikari:
+            maximum-pool-size: 3
+# Tomcat datasource
+        tomcat:
+            max-wait: 20000
+            max-active: 50
+            max-idle: 20
+            min-idle: 15
+# Java Persistence Unit / Hibernate
+    jpa:
+        database: H2
+        database-platform: org.hibernate.dialect.H2Dialect
+        hibernate:
+            ddl:
+                auto: update
+        generate-ddl: true
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.H2Dialect
+                id:
+                    new_generator_mappings: false
+                format_sql: false
+                show_sql: false

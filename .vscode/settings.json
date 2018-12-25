@@ -1,0 +1,10 @@
+{
+    "java.home": "c:\\rech\\java1.8.0_191\\x64",
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "psi-header.variables": [
+        [
+            "projectname",
+            "SpringBoilerplate"
+        ]
+    ]
+}

@@ -1,0 +1,46 @@
+#
+# Production only properties
+#
+# Spring
+server:
+    port: 80
+# Spring
+spring:
+# Enable Devtools
+    devtools:
+        restart:
+            enabled: false
+        livereload:
+            enabled: false
+# Spring Datasource
+    datasource:
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://<hostname>:3306/portozoca?useTimezone=true&serverTimezone=UTC
+        use-timezone: true
+        server-timezone: UTC
+        username: portozoca
+        password: <password>
+# Hikari Connection Pool
+        hikari:
+            maximum-pool-size: 15
+# Tomcat datasource
+        tomcat:
+            max-wait: 20000
+            max-active: 50
+            max-idle: 20
+            min-idle: 15
+# Java Persistence Unit / Hibernate
+    jpa:
+        database: MYSQL
+        database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+        show-sql: false
+        hibernate:
+            ddl:
+                auto: update
+        generate-ddl: true
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+                id:
+                    new_generator_mappings: false
+                format_sql: true

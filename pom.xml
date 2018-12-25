@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!-- Version -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Parent maven configuration file -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>2.1.1.RELEASE</version>
+    </parent>
+
+    <!-- Package settings -->
+    <groupId>br.com.portozoca</groupId>
+    <artifactId>PortoZocaWS</artifactId>
+    <version>des-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <!-- Description -->
+    <name>PortoZocaWS</name>
+    <description>WebService for the Zoca Harbor</description>
+
+    <!-- Package properties -->
+    <properties>
+        <java.version>8</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <!-- Package profiles -->
+    <profiles>
+        <!-- Development profile -->
+        <profile>
+            <id>dev</id>
+            <!-- Active by default -->
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <!-- Development-only properties -->
+            <properties>
+                <spring.profiles.active>dev</spring.profiles.active>
+            </properties>
+            <!-- Development-only dependencies -->
+            <dependencies>
+                <!-- Spring Devtools with hot-reload and more -->
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-devtools</artifactId>
+                    <scope>runtime</scope>
+                    <optional>true</optional>
+                </dependency>
+                <!-- H2 in-memory database -->
+                <dependency>
+                    <groupId>com.h2database</groupId>
+                    <artifactId>h2</artifactId>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+        <!-- Homologation profile -->
+        <profile>
+            <id>hom</id>
+            <!-- Homologation-only properties -->
+            <properties>
+                <spring.profiles.active>hom</spring.profiles.active>
+            </properties>
+            <!-- Homologation-only dependencies -->
+            <dependencies>
+                <!-- MySQL database connector -->
+                <dependency>
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-java</artifactId>
+                    <scope>runtime</scope>
+                    <!-- MySQL version has to be fixed -->
+                    <version>5.1.39</version>
+                </dependency>
+            </dependencies>
+        </profile>
+        <!-- Production profile -->
+        <profile>
+            <id>prod</id>
+            <!-- Production-only properties -->
+            <properties>
+                <spring.profiles.active>prod</spring.profiles.active>
+            </properties>
+            <!-- Production-only dependencies -->
+            <dependencies>
+                <!-- MySQL database connector -->
+                <dependency>
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-java</artifactId>
+                    <scope>runtime</scope>
+                    <!-- MySQL version has to be fixed -->
+                    <version>5.1.39</version>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+
+    <!-- Package dependencies -->
+    <dependencies>
+        <!-- Web dependencies -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- Database dependencies -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <!-- Spring HATEOAS (Hyperlink as the engine of application state) -->
+        <dependency>
+            <groupId>org.springframework.hateoas</groupId>
+            <artifactId>spring-hateoas</artifactId>
+        </dependency>
+        <!-- Unit test framework -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <!-- Package build configuration -->
+    <build>
+        <plugins>
+            <!-- Assemble plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <version>2.4.1</version>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <!-- Assemble plugin configuration -->
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <!-- Main class -->
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>br.com.portozoca.PortoZocaWS</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <!-- Assemble plugin executions -->
+                <executions>
+                    <execution>
+                        <id>assemble-all</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
