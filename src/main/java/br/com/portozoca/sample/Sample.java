@@ -16,15 +16,17 @@
  */
 package br.com.portozoca.sample;
 
-import br.com.portozoca.core.db.BaseEntity;
+import br.com.portozoca.importation.ImportableEntity;
+import br.com.portozoca.core.utils.ExcelRowInterpreter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import org.apache.poi.ss.usermodel.Row;
 
 /**
  * Sample entity
  */
 @Entity(name = "Sample")
-public class Sample extends BaseEntity {
+public class Sample extends ImportableEntity {
 
     @Column
     private String name;
@@ -37,4 +39,17 @@ public class Sample extends BaseEntity {
         this.name = name;
     }
 
+    @Override
+    public ImportableEntity buildFromRow(Row row) {
+        String[] cell = ExcelRowInterpreter.interpreter(row).toArray(new String[]{});
+        this.id = Long.parseLong(cell[0]);
+        this.name = cell[1];
+        this.version = Long.parseLong(cell[2]);
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Sample{" + "Id=" + id + " name=" + name + " version=" + version + '}';
+    }
 }
