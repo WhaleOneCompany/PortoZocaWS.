@@ -16,6 +16,7 @@
  */
 package br.com.portozoca.importation;
 
+import br.com.portozoca.core.error.ImportationException;
 import br.com.portozoca.core.db.ImportableEntity;
 
 /**

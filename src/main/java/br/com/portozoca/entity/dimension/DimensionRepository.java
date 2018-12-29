@@ -16,37 +16,12 @@
  */
 package br.com.portozoca.entity.dimension;
 
-import br.com.portozoca.core.db.AuditedEntity;
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import br.com.portozoca.core.db.DAORepository;
+import org.springframework.stereotype.Repository;
 
 /**
- * Dimension bean to represent a dimension register
+ * Sample class repository
  */
-@Entity
-public class Dimension extends AuditedEntity {
-    
-    /** weight */
-    @Column
-    private Float weight;
-    /** thickness */
-    @Column
-    private String thickness;
-
-    public Float getWeight() {
-        return weight;
-    }
-
-    public void setWeight(Float weight) {
-        this.weight = weight;
-    }
-
-    public String getThickness() {
-        return thickness;
-    }
-
-    public void setThickness(String thickness) {
-        this.thickness = thickness;
-    }
-    
+@Repository("Dimension")
+public interface DimensionRepository extends DAORepository<Dimension, Long> {
 }

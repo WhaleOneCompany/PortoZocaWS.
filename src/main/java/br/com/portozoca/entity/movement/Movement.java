@@ -14,29 +14,52 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.portozoca.entity.moviment;
+package br.com.portozoca.entity.movement;
 
 import br.com.portozoca.core.db.AuditedEntity;
+import br.com.portozoca.entity.conference.Conference;
+import br.com.portozoca.entity.travel.Travel;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 /**
  * Moviment Bean to represent a BL Moviment register
  */
-public class Moviment extends AuditedEntity{
+@Entity
+@Table(uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"travel", "bl"})
+})
+public class Movement extends AuditedEntity{
     
     /** Travel reference */
-    private Long travel;
+    @NotNull
+    @ManyToOne
+    private Travel travel;
     /** BL */
+    @Column
+    @NotNull
     private String bl;
     /** Expected quantity */
+    @Column
     private int expected;
     /** Conferred quantity */
+    @Column
     private int conferred;
+    
+    
+    @JoinColumn(referencedColumnName = "idMovement")
+    private Conference conferece;
 
-    public Long getTravel() {
+    public Travel getTravel() {
         return travel;
     }
 
-    public void setTravel(Long travel) {
+    public void setTravel(Travel travel) {
         this.travel = travel;
     }
 

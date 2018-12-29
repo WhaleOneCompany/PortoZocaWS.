@@ -17,32 +17,68 @@
 package br.com.portozoca.entity.conference;
 
 import br.com.portozoca.core.db.AuditedEntity;
+import br.com.portozoca.entity.Imported.Manifested;
+import br.com.portozoca.entity.dimension.Dimension;
+import br.com.portozoca.entity.movement.Movement;
 import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 /**
  * Conference bean to represent a conference register
  */
+@Entity
+@Table(uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"movement", "serie"})
+})
 public class Conference extends AuditedEntity {
     
-    /** Movement reference */
-    private Long movement;
+    @Column
+    private Long idMovement;
+    /** Movement */
+    @NotNull
+    @ManyToOne
+    private Movement movement;
     /** Serie of product */
+    @Column
+    @NotNull
     private String serie;
     /** Conference Date/Time */
+    @Column
     @Temporal(TemporalType.TIMESTAMP)
+    @NotNull
     private Date conferenceDate;
-    /** Dimension reference */
-    private Long dimension;
+    /** Dimension */
+    @OneToOne
+    private Dimension dimension;
     /** Observation */
+    @Column
     private String observation;
+    /** Reference to the manifested register */
+    @ManyToOne
+    private Manifested manifested;
 
-    public Long getMovement() {
+    public Long getIdMovement() {
+        return idMovement;
+    }
+
+    public void setIdMovement(Long idMovement) {
+        this.idMovement = idMovement;
+    }
+
+    public Movement getMovement() {
         return movement;
     }
 
-    public void setMovement(Long movement) {
+    public void setMovement(Movement movement) {
         this.movement = movement;
     }
 
@@ -62,11 +98,11 @@ public class Conference extends AuditedEntity {
         this.conferenceDate = conferenceDate;
     }
 
-    public Long getDimension() {
+    public Dimension getDimension() {
         return dimension;
     }
 
-    public void setDimension(Long dimension) {
+    public void setDimension(Dimension dimension) {
         this.dimension = dimension;
     }
 
@@ -76,6 +112,14 @@ public class Conference extends AuditedEntity {
 
     public void setObservation(String observation) {
         this.observation = observation;
+    }
+
+    public Manifested getManifested() {
+        return manifested;
+    }
+
+    public void setManifested(Manifested manifested) {
+        this.manifested = manifested;
     }
     
 }

@@ -14,39 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.portozoca.entity.dimension;
+package br.com.portozoca.entity.image;
 
-import br.com.portozoca.core.db.AuditedEntity;
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import br.com.portozoca.core.db.DAORepository;
+import org.springframework.stereotype.Repository;
 
 /**
- * Dimension bean to represent a dimension register
+ * Sample class repository
  */
-@Entity
-public class Dimension extends AuditedEntity {
-    
-    /** weight */
-    @Column
-    private Float weight;
-    /** thickness */
-    @Column
-    private String thickness;
-
-    public Float getWeight() {
-        return weight;
-    }
-
-    public void setWeight(Float weight) {
-        this.weight = weight;
-    }
-
-    public String getThickness() {
-        return thickness;
-    }
-
-    public void setThickness(String thickness) {
-        this.thickness = thickness;
-    }
-    
+@Repository("Image")
+public interface ImageRepository extends DAORepository<Image, Long> {
 }
