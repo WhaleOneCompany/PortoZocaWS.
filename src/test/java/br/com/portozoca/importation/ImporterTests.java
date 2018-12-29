@@ -16,6 +16,7 @@
  */
 package br.com.portozoca.importation;
 
+import br.com.portozoca.entity.Imported;
 import br.com.portozoca.sample.Sample;
 import java.io.File;
 import java.net.URISyntaxException;
@@ -34,10 +35,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class ImporterTests {
     
     /** Excel with data for testing */
-    private static final String DATA_EXCEL = "test/excel.xlsx";    
+    private static final String DATA_EXCEL = "test/excel.xlsx";
     
     /**
      * Test the excel importation
+     * @throws br.com.portozoca.importation.ImportationException
+     * @throws java.net.URISyntaxException
      */
     @Test
     public void excelImportarion() throws ImportationException, URISyntaxException {
@@ -51,7 +54,6 @@ public class ImporterTests {
             Assert.assertEquals("ID "+ line + " - Version " + (100 - line), s.getName());
             Assert.assertEquals((100 - line), s.getVersion());
         }
-            
     }
     
 }

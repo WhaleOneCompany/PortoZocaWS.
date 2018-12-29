@@ -14,17 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.portozoca.importation;
+package br.com.portozoca.core.db;
 
-import br.com.portozoca.core.db.ImportableEntity;
-import org.apache.poi.ss.usermodel.Row;
+import br.com.portozoca.importation.Importable;
 
-/**
- *
- * Interface for importing from excel
+/** 
+ * A base entity for a importable tables
  */
-public interface Importable {
-    
-    public abstract ImportableEntity buildFromRow(Row row);
+public abstract class ImportableEntity extends BaseEntity implements Importable {
     
 }

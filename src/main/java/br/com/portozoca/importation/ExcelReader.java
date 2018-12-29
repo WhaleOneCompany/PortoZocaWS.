@@ -16,6 +16,7 @@
  */
 package br.com.portozoca.importation;
 
+import br.com.portozoca.core.db.ImportableEntity;
 import java.io.File;
 import java.io.IOException;
 import org.apache.poi.EncryptedDocumentException;

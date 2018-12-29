@@ -14,37 +14,34 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.portozoca.importation;
+package br.com.portozoca.entity.dimension;
 
-import br.com.portozoca.core.db.ImportableEntity;
+import br.com.portozoca.core.db.AuditedEntity;
 
 /**
- * Excel importer
+ * Dimension bean to represent a dimension register
  */
-public class Importer {
+public class Dimension extends AuditedEntity {
     
-    /** File to import */
-    private final String file;
-    
-    /**
-     * Create a new immporter
-     * 
-     * @param file 
-     */
-    public Importer(String file) {
-        this.file = file;
+    /** weight */
+    private Float weight;
+    /** thickness */
+    private String thickness;
+
+    public Float getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Float weight) {
+        this.weight = weight;
+    }
+
+    public String getThickness() {
+        return thickness;
+    }
+
+    public void setThickness(String thickness) {
+        this.thickness = thickness;
     }
     
-    /**
-     * Import Excel file
-     * 
-     * @param <T>
-     * @param clazz
-     * @return Datas
-     * @throws br.com.portozoca.importation.ImportationException
-     */
-    public <T extends ImportableEntity> Data<T> importExcel(Class<T> clazz) throws ImportationException {
-        ExcelReader excel = new ExcelReader(file);
-        return excel.read(0, clazz);
-    }
 }

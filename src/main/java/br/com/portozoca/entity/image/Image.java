@@ -14,37 +14,35 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.portozoca.importation;
+package br.com.portozoca.entity.image;
 
-import br.com.portozoca.core.db.ImportableEntity;
+import br.com.portozoca.core.db.AuditedEntity;
 
 /**
- * Excel importer
+ * Image 
  */
-public class Importer {
+public class Image extends AuditedEntity {
     
-    /** File to import */
-    private final String file;
-    
-    /**
-     * Create a new immporter
-     * 
-     * @param file 
-     */
-    public Importer(String file) {
-        this.file = file;
+    /** url of image */
+    private String url;
+    /** conference reference */
+    private Long conference;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public Long getConference() {
+        return conference;
+    }
+
+    public void setConference(Long conference) {
+        this.conference = conference;
     }
     
-    /**
-     * Import Excel file
-     * 
-     * @param <T>
-     * @param clazz
-     * @return Datas
-     * @throws br.com.portozoca.importation.ImportationException
-     */
-    public <T extends ImportableEntity> Data<T> importExcel(Class<T> clazz) throws ImportationException {
-        ExcelReader excel = new ExcelReader(file);
-        return excel.read(0, clazz);
-    }
+    
 }

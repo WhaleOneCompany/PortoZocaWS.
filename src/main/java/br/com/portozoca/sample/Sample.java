@@ -16,7 +16,7 @@
  */
 package br.com.portozoca.sample;
 
-import br.com.portozoca.importation.ImportableEntity;
+import br.com.portozoca.core.db.ImportableEntity;
 import br.com.portozoca.core.utils.ExcelRowInterpreter;
 import javax.persistence.Column;
 import javax.persistence.Entity;

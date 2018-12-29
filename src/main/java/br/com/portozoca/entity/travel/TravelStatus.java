@@ -14,37 +14,31 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.portozoca.importation;
-
-import br.com.portozoca.core.db.ImportableEntity;
+package br.com.portozoca.entity.travel;
 
 /**
- * Excel importer
+ * Class to represent a travel status
  */
-public class Importer {
+public enum TravelStatus {
+    /** Indicates need check */
+    TO_CHECK(0),
+    /** Indicates the check is pending */
+    PENDING(2),
+    /** Indicates the check is finished */
+    CHECKED(3);
     
-    /** File to import */
-    private final String file;
-    
-    /**
-     * Create a new immporter
-     * 
-     * @param file 
-     */
-    public Importer(String file) {
-        this.file = file;
+    private final int value;
+    TravelStatus(int value) {
+        this.value = value;
     }
     
-    /**
-     * Import Excel file
-     * 
-     * @param <T>
-     * @param clazz
-     * @return Datas
-     * @throws br.com.portozoca.importation.ImportationException
-     */
-    public <T extends ImportableEntity> Data<T> importExcel(Class<T> clazz) throws ImportationException {
-        ExcelReader excel = new ExcelReader(file);
-        return excel.read(0, clazz);
-    }
+    public TravelStatus valueof (TravelStatus other) {
+        for (TravelStatus t : values()) {
+            if(t.equals(other)){
+                return t;
+            }
+        }
+        return null;
+    };
+    
 }
