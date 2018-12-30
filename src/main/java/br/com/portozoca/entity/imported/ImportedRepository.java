@@ -23,5 +23,5 @@ import org.springframework.stereotype.Repository;
  * Imported class repository
  */
 @Repository("Imported")
-public interface ImportedRepository extends DAORepository<Imported, Long> {
+public interface ImportedRepository extends DAORepository<Imported> {
 }

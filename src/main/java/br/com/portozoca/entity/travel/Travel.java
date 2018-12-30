@@ -94,5 +94,4 @@ public class Travel extends AuditedEntity {
         this.status = status;
     }
     
-            
 }

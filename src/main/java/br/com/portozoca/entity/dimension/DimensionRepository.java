@@ -23,5 +23,5 @@ import org.springframework.stereotype.Repository;
  * Dimension class repository
  */
 @Repository("Dimension")
-public interface DimensionRepository extends DAORepository<Dimension, Long> {
+public interface DimensionRepository extends DAORepository<Dimension> {
 }

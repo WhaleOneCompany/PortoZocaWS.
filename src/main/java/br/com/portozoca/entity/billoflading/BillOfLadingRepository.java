@@ -23,5 +23,5 @@ import org.springframework.stereotype.Repository;
  * BillOfLading class repository
  */
 @Repository("BillOfLading")
-public interface BillOfLadingRepository extends DAORepository<BillOfLading, Long> {
+public interface BillOfLadingRepository extends DAORepository<BillOfLading> {
 }

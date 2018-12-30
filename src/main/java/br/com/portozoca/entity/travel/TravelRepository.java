@@ -23,5 +23,5 @@ import org.springframework.stereotype.Repository;
  * Travel class repository
  */
 @Repository("Travel")
-public interface TravelRepository extends DAORepository<Travel, Long> {
+public interface TravelRepository extends DAORepository<Travel> {
 }

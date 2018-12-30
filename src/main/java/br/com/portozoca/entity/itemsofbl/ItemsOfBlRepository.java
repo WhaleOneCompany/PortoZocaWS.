@@ -23,5 +23,5 @@ import org.springframework.stereotype.Repository;
  * ItemsOfBl class repository
  */
 @Repository("ItemsOfBl")
-public interface ItemsOfBlRepository extends DAORepository<ItemsOfBl, Long> {
+public interface ItemsOfBlRepository extends DAORepository<ItemsOfBl> {
 }

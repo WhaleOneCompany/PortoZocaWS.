@@ -66,6 +66,4 @@ public class Image extends AuditedEntity {
     public void setItem(ItemsOfBl item) {
         this.item = item;
     }
-    
-    
 }

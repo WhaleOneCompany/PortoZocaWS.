@@ -16,7 +16,7 @@
  */
 package br.com.portozoca.core.db;
 
-import br.com.portozoca.importation.Importable;
+import br.com.portozoca.core.sheets.Importable;
 
 /** 
  * A base entity for a importable tables

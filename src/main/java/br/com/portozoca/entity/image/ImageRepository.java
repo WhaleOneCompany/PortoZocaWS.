@@ -23,5 +23,5 @@ import org.springframework.stereotype.Repository;
  * Image class repository
  */
 @Repository("Image")
-public interface ImageRepository extends DAORepository<Image, Long> {
+public interface ImageRepository extends DAORepository<Image> {
 }
