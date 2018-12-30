@@ -14,39 +14,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.portozoca.entity.dimension;
+package br.com.portozoca.core.sheets;
 
-import br.com.portozoca.core.db.AuditedEntity;
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import br.com.portozoca.core.error.ImportationException;
+import br.com.portozoca.core.db.ImportableEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
- * Dimension bean to represent a dimension register
+ * Excel importer
  */
-@Entity
-public class Dimension extends AuditedEntity {
-    
-    /** weight */
-    @Column
-    private Float weight;
-    /** thickness */
-    @Column
-    private String thickness;
+@Component
+public class Importer {
 
-    public Float getWeight() {
-        return weight;
-    }
+    @Autowired
+    private ExcelReader excel;
 
-    public void setWeight(Float weight) {
-        this.weight = weight;
-    }
-
-    public String getThickness() {
-        return thickness;
-    }
-
-    public void setThickness(String thickness) {
-        this.thickness = thickness;
+    /**
+     * Import Excel file
+     *
+     * @param <T>
+     * @param file
+     * @param clazz
+     * @return Datas
+     * @throws br.com.portozoca.core.error.ImportationException
+     */
+    public <T extends ImportableEntity> Data<T> fromExcel(String file, Class<T> clazz) throws ImportationException {
+        return excel.read(file, 0, clazz);
     }
     
 }

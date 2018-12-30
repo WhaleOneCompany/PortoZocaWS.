@@ -27,9 +27,8 @@ import org.springframework.data.repository.NoRepositoryBean;
  * https://www.petrikainulainen.net/programming/spring-framework/spring-data-jpa-tutorial-creating-database-queries-from-method-names/
  * https://www.petrikainulainen.net/programming/spring-framework/spring-data-jpa-tutorial-part-five-querydsl/
  *
- * @param <B> Bean gerenciado pelo banco de dados
- * @param <ID> Chave primária da Entidade
+ * @param <B> Database managed bean
  */
 @NoRepositoryBean
-public interface DAORepository<B, ID> extends JpaRepository<B, ID>, JpaSpecificationExecutor<B> {
+public interface DAORepository<B> extends JpaRepository<B, Long>, JpaSpecificationExecutor<B> {
 }

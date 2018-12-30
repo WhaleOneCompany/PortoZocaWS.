@@ -14,30 +14,49 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.portozoca.entity;
+package br.com.portozoca.entity.Imported;
 
 import br.com.portozoca.core.db.ImportableEntity;
 import br.com.portozoca.core.utils.ExcelRowInterpreter;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 import org.apache.poi.ss.usermodel.Row;
 
 /**
  * Class to represent a imported register
  */
-public class Imported extends ImportableEntity {
+@Entity
+@Table(uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"bl", "customer", "serie"})
+})
+public class Manifested extends ImportableEntity {
     
     /** Bill of lading */
+    @Column
+    @NotNull
     private String bl;
     /** Customer */
+    @Column
+    @NotNull
     private String customer;
-    /** Product */
-    private String product;
     /** Serie */
+    @Column
+    @NotNull
     private String serie;
+    /** Product */
+    @Column
+    private String product;
     /** Gross weight */
+    @Column
     private Long grossWeight;
     /** Net weight */
+    @Column
     private Long netWeight;
     /** Ship */
+    @Column
     private String ship;
 
     public String getBl() {
