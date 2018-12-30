@@ -16,7 +16,6 @@
  */
 package br.com.portozoca.importation;
 
-import br.com.portozoca.entity.Imported;
 import br.com.portozoca.sample.Sample;
 import java.io.File;
 import java.net.URISyntaxException;

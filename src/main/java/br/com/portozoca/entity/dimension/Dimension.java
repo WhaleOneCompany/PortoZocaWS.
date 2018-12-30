@@ -17,17 +17,30 @@
 package br.com.portozoca.entity.dimension;
 
 import br.com.portozoca.core.db.AuditedEntity;
+import br.com.portozoca.entity.itemsofbl.ItemsOfBl;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 /**
  * Dimension bean to represent a dimension register
  */
+@Entity
 public class Dimension extends AuditedEntity {
     
-    /** weight */
+    /** Weight */
+    @Column
     private Float weight;
-    /** thickness */
+    /** Thickness */
+    @Column
     private String thickness;
-
+    /** Item of bill of landing */
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "itemOfBl_id")
+    private ItemsOfBl itemOfBl;
+    
     public Float getWeight() {
         return weight;
     }
@@ -43,5 +56,14 @@ public class Dimension extends AuditedEntity {
     public void setThickness(String thickness) {
         this.thickness = thickness;
     }
+
+    public ItemsOfBl getItemOfBl() {
+        return itemOfBl;
+    }
+
+    public void setItemOfBl(ItemsOfBl itemOfBl) {
+        this.itemOfBl = itemOfBl;
+    }
+    
     
 }

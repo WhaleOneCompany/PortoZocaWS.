@@ -18,26 +18,39 @@ package br.com.portozoca.entity.travel;
 
 import br.com.portozoca.core.db.AuditedEntity;
 import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 
 /**
  * Travel bean to represent a Ship Travel register
  */
+@Entity
+@Table(uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"ship", "travel"}),
+})
 public class Travel extends AuditedEntity {
     
     /** Ship */
+    @Column(nullable = false)
     private String ship;
     /** Travel */
+    @Column(nullable = false)
     private String travel;
     /** customer */
+    @Column
     private String customer;
     /** Importation date */
+    @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Date importationDate;
     /** Status */
+    @Column
     @Enumerated(EnumType.ORDINAL)
     private TravelStatus status;
 
