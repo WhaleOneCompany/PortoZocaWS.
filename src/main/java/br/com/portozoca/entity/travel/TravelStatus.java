@@ -21,24 +21,19 @@ package br.com.portozoca.entity.travel;
  */
 public enum TravelStatus {
     /** Indicates need check */
-    TO_CHECK(0),
+    TO_CHECK,
     /** Indicates the check is pending */
-    PENDING(2),
+    PENDING,
     /** Indicates the check is finished */
-    CHECKED(3);
-    
-    private final int value;
-    TravelStatus(int value) {
-        this.value = value;
-    }
-    
-    public TravelStatus valueof (TravelStatus other) {
+    CHECKED;
+
+    public TravelStatus valueof(String text) {
         for (TravelStatus t : values()) {
-            if(t.equals(other)){
+            if (t.name().equalsIgnoreCase(text)) {
                 return t;
             }
         }
         return null;
-    };
-    
+    }
+
 }

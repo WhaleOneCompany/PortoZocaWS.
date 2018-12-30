@@ -14,10 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.portozoca.importation;
+package br.com.portozoca.core.sheets;
 
 import br.com.portozoca.core.error.ImportationException;
 import br.com.portozoca.core.db.ImportableEntity;
+import br.com.portozoca.core.i18n.MessageSourceExternalizer;
 import java.io.File;
 import java.io.IOException;
 import org.apache.poi.EncryptedDocumentException;
@@ -26,58 +27,76 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
- *
  * Class to read Excel files
  */
+@Component
 public class ExcelReader {
-    
-    private final String file;
-    
-    public ExcelReader(String file) {
-        this.file = file;
-    }
-    
+
+    @Autowired
+    private MessageSourceExternalizer msgs;
+
     /**
      * Read the excel file
-     * 
+     *
      * @param <T>
+     * @param filename
      * @param page
      * @param clazz
      * @return Data
-     * @throws ImportationException 
+     * @throws ImportationException
      */
-    public <T extends ImportableEntity> Data<T> read(int page, Class<T> clazz) throws ImportationException {
+    public <T extends ImportableEntity> Data<T> read(String filename, int page, Class<T> clazz) throws ImportationException {
         try {
-            Workbook workbook = WorkbookFactory.create(new File(file));
+            Workbook workbook = WorkbookFactory.create(new File(filename));
+            return read(workbook, page, clazz);
+        } catch (IOException ex) {
+            throw new ImportationException(msgs.get("file.read.fail", filename), ex);
+        } catch (InvalidFormatException ex) {
+            throw new ImportationException(msgs.get("file.format.invalid", filename), ex);
+        }
+    }
+
+    /**
+     * Read the excel file
+     *
+     * @param <T>
+     * @param workbook
+     * @param page
+     * @param clazz
+     * @return Data
+     * @throws ImportationException
+     */
+    public <T extends ImportableEntity> Data<T> read(Workbook workbook, int page, Class<T> clazz) throws ImportationException {
+        try {
             Data<T> data = new Data();
             Sheet sheet = workbook.getSheetAt(page);
-            for (Row row: sheet) {
+            for (Row row : sheet) {
                 data.add(buildRecord(row, clazz));
             }
             return data;
-        } catch (IOException | InvalidFormatException | EncryptedDocumentException ex) {
-            throw new ImportationException("Error to read the file", ex);
+        } catch (EncryptedDocumentException ex) {
+            throw new ImportationException(msgs.get("file.content.encrypted"), ex);
         }
     }
-    
+
     /**
      * Build the record and returns a instance of entity
-     * 
+     *
      * @param <T>
      * @param row
      * @param clazz
      * @return T
-     * @throws ImportationException 
+     * @throws ImportationException
      */
     private <T extends ImportableEntity> T buildRecord(Row row, Class<T> clazz) throws ImportationException {
         try {
-            T entity = clazz.newInstance();
-            entity.buildFromRow(row);
-            return entity;
+            return (T) clazz.newInstance().buildFromRow(row);
         } catch (InstantiationException | IllegalAccessException ex) {
-            throw new ImportationException("Error to build record", ex);
+            throw new ImportationException(msgs.get("fail.build.record"), ex);
         }
     }
 }

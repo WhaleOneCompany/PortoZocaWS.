@@ -40,7 +40,8 @@ public class EntityService {
 
     /** All entity DAOs */
     @Autowired
-    private @Nullable Map<String, DAORepository<? extends BaseEntity, Long>> daos;
+    private @Nullable
+    Map<String, DAORepository<? extends BaseEntity>> daos;
     @Autowired
     private ObjectMapper mapper;
 
@@ -50,7 +51,7 @@ public class EntityService {
      * @param entity
      * @return DAORepository
      */
-    public final DAORepository<? extends BaseEntity, Long> repository(String entity) {
+    public final DAORepository<? extends BaseEntity> repository(String entity) {
         String key = name(entity);
         if (!daos.containsKey(key)) {
             throw new InvalidParameterException(entity);

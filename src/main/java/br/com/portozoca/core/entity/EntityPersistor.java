@@ -45,7 +45,7 @@ public class EntityPersistor {
      * @throws ResourceException
      */
     public final BaseEntity save(String entity, String data) throws ResourceException {
-        DAORepository<? extends BaseEntity, Long> dao = entities.repository(entity);
+        DAORepository<? extends BaseEntity> dao = entities.repository(entity);
         return dao.save(entities.object(entity, data));
     }
 
@@ -73,7 +73,7 @@ public class EntityPersistor {
      * @throws ResourceNotFoundException
      */
     public final BaseEntity delete(String entity, Long id) throws ResourceNotFoundException {
-        DAORepository<? extends BaseEntity, Long> dao = entities.repository(entity);
+        DAORepository<? extends BaseEntity> dao = entities.repository(entity);
         Optional<? extends BaseEntity> optional = dao.findById(id);
         // If it exists, it's deleted
         if (optional.isPresent()) {

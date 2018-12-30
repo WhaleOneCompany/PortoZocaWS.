@@ -14,17 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.portozoca.importation;
+package br.com.portozoca.sample;
 
-import br.com.portozoca.core.db.ImportableEntity;
-import org.apache.poi.ss.usermodel.Row;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
- *
- * Interface for importing from excel
+ * Sample controller
  */
-public interface Importable {
-    
-    public abstract ImportableEntity buildFromRow(Row row);
-    
+@RestController
+public class SampleController {
+
+    @GetMapping(value = { "/hello", "/sample", "/test", "/teste" })
+    public ResponseEntity<String> hello() {
+        return new ResponseEntity<>("Hello", HttpStatus.OK);
+    }
+
 }
