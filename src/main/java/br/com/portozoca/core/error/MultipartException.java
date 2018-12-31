@@ -17,19 +17,30 @@
 package br.com.portozoca.core.error;
 
 /**
- * Exception thrown when a resouce is not found
+ * Exception for problems with multipart data
  */
-public class ResourceNotFoundException extends ResourceException {
+public class MultipartException extends PortoZocaException {
 
-    private final Long id;
-
-    public ResourceNotFoundException(Long id) {
-        super();
-        this.id = id;
+    /**
+     * Constructs an instance of <code>ImportationException</code> with the
+     * specified detail message.
+     *
+     * @param msg the detail message.
+     */
+    public MultipartException(String msg) {
+        super(msg);
     }
 
-    public Long getId() {
-        return id;
+    /**
+     * Constructs a new exception with the specified detail message and cause.
+     * <p>
+     * Note that the detail message associated with {@code cause} is <i>not</i>
+     * automatically incorporated in this exception's detail message.
+     *
+     * @param msg the detail message.
+     * @param cause
+     */
+    public MultipartException(String msg, Throwable cause) {
+        super(msg, cause);
     }
-
 }

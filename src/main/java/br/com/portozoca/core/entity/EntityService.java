@@ -20,6 +20,7 @@ import br.com.portozoca.PortoZocaWS;
 import br.com.portozoca.core.db.DAORepository;
 import br.com.portozoca.core.db.BaseEntity;
 import br.com.portozoca.core.error.ResourceException;
+import br.com.portozoca.core.i18n.MessageSourceExternalizer;
 import br.com.portozoca.core.utils.Strings;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
@@ -44,6 +45,8 @@ public class EntityService {
     Map<String, DAORepository<? extends BaseEntity>> daos;
     @Autowired
     private ObjectMapper mapper;
+    @Autowired
+    private MessageSourceExternalizer msgs;
 
     /**
      * Returns the repository (DAO) of the desired entity
@@ -54,7 +57,7 @@ public class EntityService {
     public final DAORepository<? extends BaseEntity> repository(String entity) {
         String key = name(entity);
         if (!daos.containsKey(key)) {
-            throw new InvalidParameterException(entity);
+            throw new InvalidParameterException(msgs.get("dao.not.found", entity));
         }
         return daos.get(key);
     }
@@ -72,7 +75,7 @@ public class EntityService {
         try {
             return (T) mapper.readValue(body, clazz(entity));
         } catch (IOException ex) {
-            throw new ResourceException();
+            throw new ResourceException(msgs.get("fail.build.entity", entity, body));
         }
     }
 
@@ -89,7 +92,7 @@ public class EntityService {
                     packageClass(entity)
             );
         } catch (ClassNotFoundException ex) {
-            throw new ResourceException();
+            throw new ResourceException(msgs.get("entity.not.found", entity));
         }
     }
 

@@ -14,27 +14,35 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.portozoca.core.error;
+package br.com.portozoca.core.storage;
+
+import java.util.HashSet;
+import java.util.Set;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
- * Generic application exception
+ * A Service to store files
  */
-public class PortoZocaException extends Exception {
+@Service
+public final class StorageService {
 
-    public PortoZocaException() {
-        super();
+    private final Set<String> files;
+
+    public StorageService() {
+        this.files = new HashSet<>();
     }
 
-    public PortoZocaException(String message) {
-        super(message);
+    public void save(MultipartFile file) {
+        files.add(file.getOriginalFilename());
     }
 
-    public PortoZocaException(String message, Throwable cause) {
-        super(message, cause);
+    public void delete(String filename) {
+        files.remove(filename);
     }
 
-    public PortoZocaException(Throwable cause) {
-        super(cause);
+    public Set<String> getFiles() {
+        return files;
     }
 
 }

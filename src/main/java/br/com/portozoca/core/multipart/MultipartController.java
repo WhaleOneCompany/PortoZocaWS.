@@ -14,44 +14,46 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.portozoca.sample;
+package br.com.portozoca.core.multipart;
 
+import br.com.portozoca.core.error.MultipartException;
 import br.com.portozoca.core.storage.StorageService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * Sample controller
+ * Multipart controller
  */
 @RestController
-public class SampleController {
+@RequestMapping(path = "v1/multipart/{entity}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+public class MultipartController {
 
+    @Autowired
+    private MultipartService multiparts;
     @Autowired
     private StorageService storageService;
-    @Autowired
-    private ObjectMapper mapper;
 
-    @GetMapping(value = { "/hello", "/sample", "/test", "/teste" })
-    public ResponseEntity<String> hello() {
-        return new ResponseEntity<>("Hello", HttpStatus.OK);
+    @PostMapping
+    public ResponseEntity save(@PathVariable String entity,
+            @RequestParam MultipartFile file,
+            @RequestParam String body
+    ) throws MultipartException {
+        multiparts.saveAndStore(entity, body, file);
+        return ResponseEntity.ok().build();
     }
 
-    @PostMapping(value = { "/file" })
-//    public ResponseEntity<String> file(@RequestParam("file") MultipartFile file) {
-    public ResponseEntity<String> file(@RequestParam("file") MultipartFile file, @RequestParam("data") String body) throws IOException {
-        Sample data = mapper.readValue(body, Sample.class);
-        System.out.println(body);
-        storageService.save(file);
-        return new ResponseEntity<>("Hello", HttpStatus.OK);
+    @GetMapping
+    public ResponseEntity listFiles(@PathVariable String entity) {
+        return new ResponseEntity(storageService.getFiles(), HttpStatus.OK);
     }
 
 }

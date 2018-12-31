@@ -17,17 +17,9 @@
 package br.com.portozoca.core.error;
 
 /**
- *
- * @author Spaniol
+ * Exception for problems importing a file
  */
-public class ImportationException extends Exception {
-
-    /**
-     * Creates a new instance of <code>ImportationException</code> without
-     * detail message.
-     */
-    public ImportationException() {
-    }
+public class ImportationException extends PortoZocaException {
 
     /**
      * Constructs an instance of <code>ImportationException</code> with the
@@ -38,12 +30,12 @@ public class ImportationException extends Exception {
     public ImportationException(String msg) {
         super(msg);
     }
-    
+
     /**
-     * Constructs a new exception with the specified detail message and
-     * cause.  <p>Note that the detail message associated with
-     * {@code cause} is <i>not</i> automatically incorporated in
-     * this exception's detail message.
+     * Constructs a new exception with the specified detail message and cause.
+     * <p>
+     * Note that the detail message associated with {@code cause} is <i>not</i>
+     * automatically incorporated in this exception's detail message.
      *
      * @param msg the detail message.
      * @param cause

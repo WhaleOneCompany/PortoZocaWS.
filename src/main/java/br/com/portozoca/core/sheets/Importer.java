@@ -19,12 +19,12 @@ package br.com.portozoca.core.sheets;
 import br.com.portozoca.core.error.ImportationException;
 import br.com.portozoca.core.db.ImportableEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * Excel importer
  */
-@Component
+@Service
 public class Importer {
 
     @Autowired
@@ -42,5 +42,5 @@ public class Importer {
     public <T extends ImportableEntity> Data<T> fromExcel(String file, Class<T> clazz) throws ImportationException {
         return excel.read(file, 0, clazz);
     }
-    
+
 }

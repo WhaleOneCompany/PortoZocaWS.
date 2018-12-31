@@ -14,27 +14,37 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.portozoca.core.error;
+package br.com.portozoca.core.multipart;
+
+import br.com.portozoca.core.db.BaseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
- * Generic application exception
+ * A class to represent multipart data
+ *
+ * @param <T>
  */
-public class PortoZocaException extends Exception {
+public class MultipartData<T extends BaseEntity> {
 
-    public PortoZocaException() {
-        super();
+    private final MultipartFile file;
+    private final T data;
+
+    public MultipartData(MultipartFile file, T data) {
+        this.file = file;
+        this.data = data;
     }
 
-    public PortoZocaException(String message) {
-        super(message);
+    public MultipartFile getFile() {
+        return file;
     }
 
-    public PortoZocaException(String message, Throwable cause) {
-        super(message, cause);
+    public T getData() {
+        return data;
     }
 
-    public PortoZocaException(Throwable cause) {
-        super(cause);
+    @Override
+    public String toString() {
+        return "MultipartData{" + "file=" + file.getOriginalFilename() + ", body=" + data + '}';
     }
 
 }

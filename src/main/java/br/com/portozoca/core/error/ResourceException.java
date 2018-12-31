@@ -20,4 +20,13 @@ package br.com.portozoca.core.error;
  * Exception thrown when problem occurs with resources
  */
 public class ResourceException extends PortoZocaException {
+
+    public ResourceException() {
+        super();
+    }
+
+    public ResourceException(String message) {
+        super(message);
+    }
+
 }
