@@ -16,12 +16,9 @@
  */
 package br.com.portozoca.core.entity;
 
-import br.com.portozoca.PortoZocaWS;
 import br.com.portozoca.core.db.DAORepository;
 import br.com.portozoca.core.db.BaseEntity;
 import br.com.portozoca.core.error.ResourceException;
-import br.com.portozoca.core.i18n.MessageSourceExternalizer;
-import br.com.portozoca.core.utils.Strings;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.security.InvalidParameterException;
@@ -36,17 +33,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class EntityService {
 
-    /** Base entity package */
-    private static final String BASE_PKG = PortoZocaWS.class.getPackage().getName();
+    /** Repository suffix */
+    private static final String REPOSITORY = "Repository";
 
     /** All entity DAOs */
     @Autowired
     private @Nullable
     Map<String, DAORepository<? extends BaseEntity>> daos;
+
+    @Autowired
+    private @Nullable
+    Map<String, Class<? extends BaseEntity>> entities;
     @Autowired
     private ObjectMapper mapper;
-    @Autowired
-    private MessageSourceExternalizer msgs;
 
     /**
      * Returns the repository (DAO) of the desired entity
@@ -55,9 +54,9 @@ public class EntityService {
      * @return DAORepository
      */
     public final DAORepository<? extends BaseEntity> repository(String entity) {
-        String key = name(entity);
+        String key = name(entity).concat(REPOSITORY);
         if (!daos.containsKey(key)) {
-            throw new InvalidParameterException(msgs.get("dao.not.found", entity));
+            throw new InvalidParameterException(entity);
         }
         return daos.get(key);
     }
@@ -75,7 +74,7 @@ public class EntityService {
         try {
             return (T) mapper.readValue(body, clazz(entity));
         } catch (IOException ex) {
-            throw new ResourceException(msgs.get("fail.build.entity", entity, body));
+            throw new ResourceException();
         }
     }
 
@@ -87,29 +86,11 @@ public class EntityService {
      * @throws br.com.portozoca.core.error.ResourceException
      */
     public final Class<? extends BaseEntity> clazz(String entity) throws ResourceException {
-        try {
-            return (Class<? extends BaseEntity>) Class.forName(
-                    packageClass(entity)
-            );
-        } catch (ClassNotFoundException ex) {
-            throw new ResourceException(msgs.get("entity.not.found", entity));
+        Class<? extends BaseEntity> get = entities.get(name(entity));
+        if (get == null) {
+            throw new ResourceException();
         }
-    }
-
-    /**
-     * Returns full package and class name acording to entity name
-     *
-     * @param entity
-     * @return Class
-     */
-    public final String packageClass(String entity) {
-        return new StringBuilder().
-                append(BASE_PKG).
-                append('.').
-                append(entity.toLowerCase()).
-                append('.').
-                append(name(entity)).
-                toString();
+        return get;
     }
 
     /**
@@ -119,7 +100,7 @@ public class EntityService {
      * @return String
      */
     public final String name(String entity) {
-        return Strings.capitalize(entity);
+        return entity.toLowerCase();
     }
 
 }
