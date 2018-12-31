@@ -14,18 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.portozoca.entity.imported;
+package br.com.portozoca.imported;
 
 import br.com.portozoca.core.db.ImportableEntity;
 import br.com.portozoca.core.utils.ExcelRowInterpreter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import org.apache.poi.ss.usermodel.Row;
+import org.springframework.stereotype.Component;
 
 /**
  * Class to represent a imported register
  */
 @Entity
+@Component("imported")
 public class Imported extends ImportableEntity {
     
     /** Bill of lading */

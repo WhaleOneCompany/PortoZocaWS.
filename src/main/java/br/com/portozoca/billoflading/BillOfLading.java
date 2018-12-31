@@ -14,10 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.portozoca.entity.billoflading;
+package br.com.portozoca.billoflading;
 
 import br.com.portozoca.core.db.AuditedEntity;
-import br.com.portozoca.entity.itemsofbl.ItemsOfBl;
+import br.com.portozoca.itemsofbl.ItemsOfBl;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,16 +27,17 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import org.springframework.stereotype.Component;
 
 /**
  * Moviment Bean to represent a BL Moviment register
  */
 @Entity
+@Component("billoflading")
 @Table(uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"travel", "bl", "customer"}),
-})
-public class BillOfLading extends AuditedEntity{
-    
+    @UniqueConstraint(columnNames = {"travel", "bl", "customer"}),})
+public class BillOfLading extends AuditedEntity {
+
     /** Travel reference */
     @Column(nullable = false)
     private Long travel;
@@ -44,21 +46,15 @@ public class BillOfLading extends AuditedEntity{
     private String bl;
     @Column
     private String customer;
-    /** Manifested quantity */
-    @Column
-    private Long manifested;
-    /** Conferred quantity */
-    @Column
-    private Long conferred;
     /** Items of bill of lading */
     @OneToMany(
             mappedBy = "bl",
             targetEntity = ItemsOfBl.class,
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
-    )
+    ) @JsonIgnore
     private List<ItemsOfBl> items;
-    
+
     public Long getTravel() {
         return travel;
     }
@@ -83,22 +79,6 @@ public class BillOfLading extends AuditedEntity{
         this.customer = customer;
     }
 
-    public Long getManifested() {
-        return manifested;
-    }
-
-    public void setManifested(Long manifested) {
-        this.manifested = manifested;
-    }
-
-    public Long getConferred() {
-        return conferred;
-    }
-
-    public void setConferred(Long conferred) {
-        this.conferred = conferred;
-    }
-
     public List<ItemsOfBl> getItems() {
         return items;
     }
@@ -106,5 +86,5 @@ public class BillOfLading extends AuditedEntity{
     public void setItems(List<ItemsOfBl> items) {
         this.items = items;
     }
-    
+
 }

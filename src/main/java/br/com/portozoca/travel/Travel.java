@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.portozoca.entity.travel;
+package br.com.portozoca.travel;
 
 import br.com.portozoca.core.db.AuditedEntity;
 import java.util.Date;
@@ -26,11 +26,13 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+import org.springframework.stereotype.Component;
 
 /**
  * Travel bean to represent a Ship Travel register
  */
 @Entity
+@Component("travel")
 @Table(uniqueConstraints = {
     @UniqueConstraint(columnNames = {"ship", "travel"}),
 })
@@ -42,9 +44,6 @@ public class Travel extends AuditedEntity {
     /** Travel */
     @Column(nullable = false)
     private String travel;
-    /** customer */
-    @Column
-    private String customer;
     /** Importation date */
     @Column
     @Temporal(TemporalType.TIMESTAMP)
@@ -68,14 +67,6 @@ public class Travel extends AuditedEntity {
 
     public void setTravel(String travel) {
         this.travel = travel;
-    }
-
-    public String getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(String customer) {
-        this.customer = customer;
     }
 
     public Date getImportationDate() {

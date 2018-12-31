@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.portozoca.entity.billoflading;
+package br.com.portozoca.itemsofbl;
 
 import br.com.portozoca.core.db.DAORepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * BillOfLading class repository
+ * ItemsOfBl class repository
  */
-@Repository("BillOfLading")
-public interface BillOfLadingRepository extends DAORepository<BillOfLading> {
+@Repository("itemsofblRepository")
+public interface ItemsOfBlRepository extends DAORepository<ItemsOfBl> {
 }

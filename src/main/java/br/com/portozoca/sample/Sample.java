@@ -21,11 +21,13 @@ import br.com.portozoca.core.utils.ExcelRowInterpreter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import org.apache.poi.ss.usermodel.Row;
+import org.springframework.stereotype.Component;
 
 /**
  * Sample entity
  */
 @Entity(name = "Sample")
+@Component("sample")
 public class Sample extends ImportableEntity {
 
     @Column

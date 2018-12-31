@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.portozoca.entity.dimension;
+package br.com.portozoca.travel;
 
 import br.com.portozoca.core.db.DAORepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * Dimension class repository
+ * Travel class repository
  */
-@Repository("Dimension")
-public interface DimensionRepository extends DAORepository<Dimension> {
+@Repository("travelRepository")
+public interface TravelRepository extends DAORepository<Travel> {
 }

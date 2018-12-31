@@ -2,5 +2,67 @@
     {
         "_class": "br.com.portozoca.sample.Sample",
         "name": "Sample One"
+    },
+    {
+        "_class": "br.com.portozoca.travel.Travel",
+        "ship": "ATLANTICO",
+        "travel": "TRAVEL 1",
+        "status": "TO_CHECK",
+        "importationDate": "2018-12-10T21:53:01.300Z"
+    },
+    {
+        "_class": "br.com.portozoca.travel.Travel",
+        "ship": "ATLANTICO",
+        "travel": "TRAVEL 2",
+        "status": "TO_CHECK",
+        "importationDate": "2018-12-10T21:53:01.300Z"
+    },{
+        "_class": "br.com.portozoca.billoflading.BillOfLading",
+        "travel": 1,
+        "bl": "BR2018B171",
+        "customer": "WHALE ONE"
+    },{
+        "_class": "br.com.portozoca.billoflading.BillOfLading",
+        "travel": 1,
+        "bl": "BR2018B172",
+        "customer": "WHALE TWO"
+    },{
+        "_class": "br.com.portozoca.billoflading.BillOfLading",
+        "travel": 1,
+        "bl": "BR2018B173",
+        "customer": "WHALE ONE"
+    },{
+        "_class": "br.com.portozoca.itemsofbl.ItemsOfBl",
+        "bl": 1,
+        "serie": "SERIE001",
+        "status": "MANIFESTED",
+        "conferenceDate": "2018-12-10T21:53:01.300Z",
+        "observation": "Dimensão 150x150 e 300 de espessura",
+        "source": "IMPORTED"
+    },{
+        "_class": "br.com.portozoca.itemsofbl.ItemsOfBl",
+        "bl": 1,
+        "serie": "SERIE002",
+        "status": "MANIFESTED",
+        "conferenceDate": "2018-12-10T21:53:01.300Z",
+        "observation": "Dimensão 150x150 e 300 de espessura",
+        "source": "IMPORTED"
+    },{
+        "_class": "br.com.portozoca.itemsofbl.ItemsOfBl",
+        "bl": 2,
+        "serie": "SERIE003",
+        "status": "MANIFESTED",
+        "conferenceDate": "2018-12-10T21:53:01.300Z",
+        "observation": "Dimensão 150x150 e 300 de espessura",
+        "source": "IMPORTED"
+    },{
+        "_class": "br.com.portozoca.itemsofbl.ItemsOfBl",
+        "bl": 3,
+        "serie": "SERIE001",
+        "status": "MANIFESTED",
+        "conferenceDate": "2018-12-10T21:53:01.300Z",
+        "observation": "Dimensão 150x150 e 300 de espessura",
+        "source": "IMPORTED"
     }
+    
 ]

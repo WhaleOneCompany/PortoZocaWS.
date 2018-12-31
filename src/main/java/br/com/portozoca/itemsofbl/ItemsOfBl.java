@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.portozoca.entity.itemsofbl;
+package br.com.portozoca.itemsofbl;
 
 import br.com.portozoca.core.db.AuditedEntity;
-import br.com.portozoca.entity.billoflading.BillOfLading;
-import br.com.portozoca.entity.dimension.Dimension;
-import br.com.portozoca.entity.image.Image;
+import br.com.portozoca.billoflading.BillOfLading;
+import br.com.portozoca.dimension.Dimension;
+import br.com.portozoca.image.Image;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -36,11 +36,13 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+import org.springframework.stereotype.Component;
 
 /**
  * Conference bean to represent a conference register
  */
 @Entity
+@Component("itemsofbl")
 @Table(uniqueConstraints = {
     @UniqueConstraint(columnNames = {"bl", "serie"}),
 })
@@ -75,16 +77,16 @@ public class ItemsOfBl extends AuditedEntity {
     @JoinColumn(name = "billOfLading_id")
     private BillOfLading billOfLading;
     /** Dimension */
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "dimension_id")
     private Dimension dimensionObj;
     /** Images */
     @OneToMany(
             mappedBy = "itemOfBl",
             targetEntity = Image.class,
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = CascadeType.ALL
-    )
+    ) 
     private List<Image> images;
     
     public Long getBl() {

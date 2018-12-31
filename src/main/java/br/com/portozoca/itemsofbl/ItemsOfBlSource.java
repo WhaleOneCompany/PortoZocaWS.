@@ -14,23 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.portozoca.entity.itemsofbl;
+package br.com.portozoca.itemsofbl;
 
 /**
  * Source of the item of bl
  */
 public enum ItemsOfBlSource {
-    /** Indicates the item is manifested */
-    IMPORTED(0);
+    DIGITED,
+    IMPORTED;
     
-    private final int value;
-    ItemsOfBlSource(int value) {
-        this.value = value;
-    }
-    
-    public ItemsOfBlSource valueof (ItemsOfBlSource other) {
+    public ItemsOfBlSource valueof (String other) {
         for (ItemsOfBlSource t : values()) {
-            if(t.equals(other)){
+            if(t.name().equalsIgnoreCase(other)){
                 return t;
             }
         }

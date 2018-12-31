@@ -14,56 +14,58 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.portozoca.entity.dimension;
+package br.com.portozoca.image;
 
 import br.com.portozoca.core.db.AuditedEntity;
-import br.com.portozoca.entity.itemsofbl.ItemsOfBl;
+import br.com.portozoca.itemsofbl.ItemsOfBl;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import org.springframework.stereotype.Component;
 
 /**
- * Dimension bean to represent a dimension register
+ * Image 
  */
 @Entity
-public class Dimension extends AuditedEntity {
+@Component("image")
+public class Image extends AuditedEntity {
     
-    /** Weight */
-    @Column
-    private Float weight;
-    /** Thickness */
-    @Column
-    private String thickness;
+    /** Url of image */
+    @Column(
+            nullable = false,
+            unique = true
+            )
+    private String url;
+    /** Item of bill of landing reference */
+    @Column(nullable = false)
+    private Long itemOfBl;
     /** Item of bill of landing */
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "itemOfBl_id")
-    private ItemsOfBl itemOfBl;
-    
-    public Float getWeight() {
-        return weight;
+    private ItemsOfBl item;
+
+    public String getUrl() {
+        return url;
     }
 
-    public void setWeight(Float weight) {
-        this.weight = weight;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public String getThickness() {
-        return thickness;
-    }
-
-    public void setThickness(String thickness) {
-        this.thickness = thickness;
-    }
-
-    public ItemsOfBl getItemOfBl() {
+    public Long getItemOfBl() {
         return itemOfBl;
     }
 
-    public void setItemOfBl(ItemsOfBl itemOfBl) {
+    public void setItemOfBl(Long itemOfBl) {
         this.itemOfBl = itemOfBl;
     }
-    
-    
+
+    public ItemsOfBl getItem() {
+        return item;
+    }
+
+    public void setItem(ItemsOfBl item) {
+        this.item = item;
+    }
 }

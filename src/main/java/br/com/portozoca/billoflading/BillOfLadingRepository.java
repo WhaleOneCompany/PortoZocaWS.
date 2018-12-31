@@ -14,26 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.portozoca.entity.travel;
+package br.com.portozoca.billoflading;
+
+import br.com.portozoca.core.db.DAORepository;
+import org.springframework.stereotype.Repository;
 
 /**
- * Class to represent a travel status
+ * BillOfLading class repository
  */
-public enum TravelStatus {
-    /** Indicates need check */
-    TO_CHECK,
-    /** Indicates the check is pending */
-    PENDING,
-    /** Indicates the check is finished */
-    CHECKED;
-
-    public TravelStatus valueof(String text) {
-        for (TravelStatus t : values()) {
-            if (t.name().equalsIgnoreCase(text)) {
-                return t;
-            }
-        }
-        return null;
-    }
-
+@Repository("billofladingRepository")
+public interface BillOfLadingRepository extends DAORepository<BillOfLading> {
 }

@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.portozoca.entity.imported;
+package br.com.portozoca.image;
 
 import br.com.portozoca.core.db.DAORepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * Imported class repository
+ * Image class repository
  */
-@Repository("Imported")
-public interface ImportedRepository extends DAORepository<Imported> {
+@Repository("imageRepository")
+public interface ImageRepository extends DAORepository<Image> {
 }

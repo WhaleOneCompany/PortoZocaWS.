@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Spaniol
+ * Copyright (C) 2018 PortoZocaWS
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,29 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.portozoca.entity.itemsofbl;
+package br.com.portozoca.imported;
+
+import br.com.portozoca.core.db.DAORepository;
+import org.springframework.stereotype.Repository;
 
 /**
- * Status of the item of bl
+ * Imported class repository
  */
-public enum ItemsOfBlStatus {
-    /** Indicates the item is manifested */
-    MANIFESTED(0),
-    /** Indicates the item is conferred */
-    CONFERRED(1);
-    
-    private final int value;
-    ItemsOfBlStatus(int value) {
-        this.value = value;
-    }
-    
-    public ItemsOfBlStatus valueof (ItemsOfBlStatus other) {
-        for (ItemsOfBlStatus t : values()) {
-            if(t.equals(other)){
-                return t;
-            }
-        }
-        return null;
-    };
-
+@Repository("importedRepository")
+public interface ImportedRepository extends DAORepository<Imported> {
 }
