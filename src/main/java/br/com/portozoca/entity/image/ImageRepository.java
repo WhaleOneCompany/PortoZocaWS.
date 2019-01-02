@@ -20,8 +20,8 @@ import br.com.portozoca.core.db.DAORepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * Sample class repository
+ * Image class repository
  */
-@Repository("Image")
-public interface ImageRepository extends DAORepository<Image, Long> {
+@Repository("imageRepository")
+public interface ImageRepository extends DAORepository<Image> {
 }

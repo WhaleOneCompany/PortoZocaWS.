@@ -20,8 +20,8 @@ import br.com.portozoca.core.db.DAORepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * Sample class repository
+ * Dimension class repository
  */
-@Repository("Dimension")
-public interface DimensionRepository extends DAORepository<Dimension, Long> {
+@Repository("dimensionRepository")
+public interface DimensionRepository extends DAORepository<Dimension> {
 }

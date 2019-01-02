@@ -14,24 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.portozoca.entity.travel;
+package br.com.portozoca.entity.itemsofbl;
+
+import br.com.portozoca.core.db.DAORepository;
+import org.springframework.stereotype.Repository;
 
 /**
- * Class to represent a travel status
+ * ItemsOfBl class repository
  */
-public enum TravelStatus {
-
-    TO_CHECK,
-    PENDING,
-    CHECKED;
-
-    public TravelStatus valueof(Object other) {
-        for (TravelStatus t : values()) {
-            if (t.name().equalsIgnoreCase(other.toString())) {
-                return t;
-            }
-        }
-        return null;
-    }
-
+@Repository("itemsofblRepository")
+public interface ItemsOfBlRepository extends DAORepository<ItemsOfBl> {
 }

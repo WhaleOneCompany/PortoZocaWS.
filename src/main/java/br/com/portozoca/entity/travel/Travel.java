@@ -26,28 +26,26 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
+import org.springframework.stereotype.Component;
 
 /**
  * Travel bean to represent a Ship Travel register
  */
 @Entity
+@Component("travel")
 @Table(uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"ship", "travel"})
+    @UniqueConstraint(columnNames = { "ship", "travel" })
 })
 public class Travel extends AuditedEntity {
-    
+
     /** Ship */
-    @Column
-    @NotNull
+    @Column(nullable = false)
     private String ship;
     /** Travel */
-    @Column
-    @NotNull
+    @Column(nullable = false)
     private String travel;
     /** customer */
     @Column
-    @NotNull
     private String customer;
     /** Importation date */
     @Column
@@ -55,7 +53,6 @@ public class Travel extends AuditedEntity {
     private Date importationDate;
     /** Status */
     @Column
-    @NotNull
     @Enumerated(EnumType.ORDINAL)
     private TravelStatus status;
 
@@ -98,6 +95,5 @@ public class Travel extends AuditedEntity {
     public void setStatus(TravelStatus status) {
         this.status = status;
     }
-    
-            
+
 }

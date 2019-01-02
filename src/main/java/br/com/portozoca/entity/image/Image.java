@@ -17,26 +17,33 @@
 package br.com.portozoca.entity.image;
 
 import br.com.portozoca.core.db.AuditedEntity;
-import br.com.portozoca.entity.conference.Conference;
+import br.com.portozoca.entity.itemsofbl.ItemsOfBl;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
+import org.springframework.stereotype.Component;
 
 /**
- * Image 
+ * Image
  */
 @Entity
+@Component("image")
 public class Image extends AuditedEntity {
-    
-    /** url of image */
-    @Column(unique = true)
-    @NotNull
+
+    /** Url of image */
+    @Column(
+            nullable = false,
+            unique = true
+    )
     private String url;
-    /** Conference reference */
-    @NotNull
+    /** Item of bill of landing reference */
+    @Column(nullable = false)
+    private Long itemOfBl;
+    /** Item of bill of landing */
     @ManyToOne
-    private Conference conference;
+    @JoinColumn(name = "itemOfBl_id")
+    private ItemsOfBl item;
 
     public String getUrl() {
         return url;
@@ -46,13 +53,20 @@ public class Image extends AuditedEntity {
         this.url = url;
     }
 
-    public Conference getConference() {
-        return conference;
+    public Long getItemOfBl() {
+        return itemOfBl;
     }
 
-    public void setConference(Conference conference) {
-        this.conference = conference;
+    public void setItemOfBl(Long itemOfBl) {
+        this.itemOfBl = itemOfBl;
     }
-    
-    
+
+    public ItemsOfBl getItem() {
+        return item;
+    }
+
+    public void setItem(ItemsOfBl item) {
+        this.item = item;
+    }
+
 }

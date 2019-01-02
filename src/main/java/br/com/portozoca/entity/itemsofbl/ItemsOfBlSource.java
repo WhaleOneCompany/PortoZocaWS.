@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 PortoZocaWS
+ * Copyright (C) 2018 Spaniol
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,14 +14,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.portozoca.entity.movement;
-
-import br.com.portozoca.core.db.DAORepository;
-import org.springframework.stereotype.Repository;
+package br.com.portozoca.entity.itemsofbl;
 
 /**
- * Sample class repository
+ * Source of the item of bl
  */
-@Repository("Movement")
-public interface MovementRepository extends DAORepository<Movement, Long> {
+public enum ItemsOfBlSource {
+
+    DIGITED,
+    IMPORTED;
+
+    public ItemsOfBlSource valueOf(Object other) {
+        for (ItemsOfBlSource t : values()) {
+            if (t.name().equalsIgnoreCase(other.toString())) {
+                return t;
+            }
+        }
+        return null;
+    }
+;
 }

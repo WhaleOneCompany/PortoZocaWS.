@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 PortoZocaWS
+ * Copyright (C) 2018 Spaniol
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,19 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.portozoca.entity.travel;
+package br.com.portozoca.entity.itemsofbl;
 
 /**
- * Class to represent a travel status
+ * Status of the item of bl
  */
-public enum TravelStatus {
+public enum ItemsOfBlStatus {
 
-    TO_CHECK,
-    PENDING,
-    CHECKED;
+    MANIFESTED,
+    CONFERRED;
 
-    public TravelStatus valueof(Object other) {
-        for (TravelStatus t : values()) {
+    public ItemsOfBlStatus valueOf(Object other) {
+        for (ItemsOfBlStatus t : values()) {
             if (t.name().equalsIgnoreCase(other.toString())) {
                 return t;
             }

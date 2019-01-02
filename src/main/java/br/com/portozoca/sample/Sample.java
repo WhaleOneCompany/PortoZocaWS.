@@ -21,11 +21,13 @@ import br.com.portozoca.core.utils.ExcelRowInterpreter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import org.apache.poi.ss.usermodel.Row;
+import org.springframework.stereotype.Component;
 
 /**
  * Sample entity
  */
 @Entity(name = "Sample")
+@Component("sample")
 public class Sample extends ImportableEntity {
 
     @Column
@@ -41,7 +43,7 @@ public class Sample extends ImportableEntity {
 
     @Override
     public ImportableEntity buildFromRow(Row row) {
-        String[] cell = ExcelRowInterpreter.interpreter(row).toArray(new String[]{});
+        String[] cell = ExcelRowInterpreter.interpreter(row).toArray(new String[] {});
         this.id = Long.parseLong(cell[0]);
         this.name = cell[1];
         this.version = Long.parseLong(cell[2]);
