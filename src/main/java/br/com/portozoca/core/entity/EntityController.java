@@ -29,12 +29,17 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import br.com.portozoca.core.db.BaseEntity;
+import br.com.portozoca.core.search.SearchCriteria;
+import br.com.portozoca.core.search.SearchSpecification;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.http.MediaType;
 import javax.transaction.Transactional;
+import org.springframework.lang.Nullable;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Controller for all the entities
@@ -70,12 +75,13 @@ public class EntityController {
      * Endpoint for reading a page of resources
      *
      * @param entity
+     * @param search
      * @param pageable
      * @return ResponseEntity
      */
     @GetMapping
-    public ResponseEntity<PagedResources> read(@PathVariable String entity, Pageable pageable) {
-        Page page = query.findAll(entity, pageable);
+    public ResponseEntity<PagedResources> read(@PathVariable String entity, @Nullable @RequestParam(value = "search") SearchCriteria search, Pageable pageable) {
+        Page page = query.findAll(entity, SearchSpecification.toSpec(search), pageable);
         return new ResponseEntity<>(assembler.toResource(page), HttpStatus.OK);
     }
 

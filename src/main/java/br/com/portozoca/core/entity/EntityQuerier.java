@@ -21,6 +21,7 @@ import br.com.portozoca.core.error.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 /**
@@ -48,11 +49,15 @@ public class EntityQuerier {
      * Query a resources data page
      *
      * @param entity
+     * @param spec
      * @param pageable
      * @return Page
      */
-    public final Page findAll(String entity, Pageable pageable) {
-        return entities.repository(entity).findAll(pageable);
+    public final Page findAll(String entity, Specification spec, Pageable pageable) {
+        if (spec == null) {
+            return entities.repository(entity).findAll(pageable);
+        }
+        return entities.repository(entity).findAll(spec, pageable);
     }
 
 }
