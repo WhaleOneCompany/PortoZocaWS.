@@ -16,6 +16,8 @@
  */
 package br.com.portozoca.core.search;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
@@ -24,28 +26,31 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 /**
- * Search specification for the
+ * Search specification for the database
  */
 public class SearchSpecification implements Specification {
 
-    public static final Specification toSpec(SearchCriteria criteria) {
-        if (criteria == null || criteria.isEmpty()) {
-            return null;
-        }
-        return new SearchSpecification(criteria.get(0));
-    }
+    private final SearchCriteria searchCriteria;
 
-    private final SearchParam searchCriteria;
-
-    private SearchSpecification(SearchParam searchCriteria) {
+    private SearchSpecification(SearchCriteria searchCriteria) {
         this.searchCriteria = searchCriteria;
     }
 
     @Override
-    public Predicate toPredicate(Root root, CriteriaQuery query, CriteriaBuilder builder) {
-        Path field = root.get(searchCriteria.getKey());
-        String value = searchCriteria.getValue().toString();
-        switch (searchCriteria.getOp()) {
+    public final Predicate toPredicate(Root root, CriteriaQuery q, CriteriaBuilder b) {
+        List<Predicate> pList = new ArrayList<>();
+        final int size = searchCriteria.getItems().size();
+        for (int i = 0; i < size; i++) {
+            SearchParam sc = searchCriteria.get(i);
+            pList.add(createPredicate(root, b, sc));
+        }
+        return b.and(pList.toArray(new Predicate[size]));
+    }
+
+    private static Predicate createPredicate(Root root, CriteriaBuilder builder, SearchParam p) {
+        Path field = root.get(p.getKey());
+        String value = p.getValue().toString();
+        switch (p.getOp()) {
             case EQ:
                 return builder.equal(field, value);
             case NEQ:
@@ -59,11 +64,22 @@ public class SearchSpecification implements Specification {
             case LTE:
                 return builder.lessThanOrEqualTo(field, value);
             case LIKE:
-                return builder.like(field, "%" + value + "%");
+                return builder.like(field, value);
             case NLIKE:
+                return builder.notLike(field, value);
+            case CT:
+                return builder.like(field, "%" + value + "%");
+            case NCT:
                 return builder.notLike(field, "%" + value + "%");
         }
         return null;
+    }
+
+    public static final Specification create(SearchCriteria criteria) {
+        if (criteria == null || criteria.isEmpty()) {
+            return null;
+        }
+        return new SearchSpecification(criteria);
     }
 
 }

@@ -85,7 +85,7 @@ public class EntityController {
     public ResponseEntity<PagedResources> read(@PathVariable String entity, Pageable pageable,
             @Nullable @RequestParam String search) {
         SearchCriteria criteria = searchFactory.create(search);
-        Page page = query.findAll(entity, SearchSpecification.toSpec(criteria), pageable);
+        Page page = query.findAll(entity, SearchSpecification.create(criteria), pageable);
         return new ResponseEntity<>(assembler.toResource(page), HttpStatus.OK);
     }
 

@@ -21,7 +21,7 @@ package br.com.portozoca.core.search;
  */
 public enum SearchOperator {
 
-    EQ, NEQ, GT, LT, GTE, LTE, LIKE, NLIKE;
+    EQ, NEQ, GT, LT, GTE, LTE, LIKE, NLIKE, CT, NCT;
 
     public SearchOperator valueOf(Object other) {
         for (SearchOperator v : values()) {

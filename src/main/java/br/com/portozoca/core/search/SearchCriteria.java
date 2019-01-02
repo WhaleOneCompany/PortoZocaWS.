@@ -19,8 +19,7 @@ package br.com.portozoca.core.search;
 import java.util.List;
 
 /**
- *
- * @author jonas
+ * Search Criteria
  */
 public class SearchCriteria {
 
@@ -32,6 +31,10 @@ public class SearchCriteria {
 
     public void setItems(List<SearchParam> items) {
         this.items = items;
+    }
+
+    public List<SearchParam> getItens() {
+        return this.items;
     }
 
     public final SearchParam get(int idx) {
