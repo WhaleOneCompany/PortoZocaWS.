@@ -78,6 +78,21 @@ public class ErrorHandler {
     }
 
     /**
+     * Handles resource exceptions
+     *
+     * @param e
+     * @return String
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(InvalidParamException.class)
+    public Object handleResourceNotFound(InvalidParamException e) {
+        Map map = new LinkedHashMap<>();
+        map.put(TITLE, msgs.get("param.invalid"));
+        map.put(ERROR, e.getMessage());
+        return map;
+    }
+
+    /**
      * Lida com Exceptions genéricas da aplicação
      *
      * @param e

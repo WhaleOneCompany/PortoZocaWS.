@@ -24,8 +24,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 /**
- *
- * @author jonas
+ * Search specification for the
  */
 public class SearchSpecification implements Specification {
 
@@ -46,7 +45,7 @@ public class SearchSpecification implements Specification {
     public Predicate toPredicate(Root root, CriteriaQuery query, CriteriaBuilder builder) {
         Path field = root.get(searchCriteria.getKey());
         String value = searchCriteria.getValue().toString();
-        switch (searchCriteria.getOperator()) {
+        switch (searchCriteria.getOp()) {
             case EQ:
                 return builder.equal(field, value);
             case NEQ:
@@ -60,7 +59,7 @@ public class SearchSpecification implements Specification {
             case LTE:
                 return builder.lessThanOrEqualTo(field, value);
             case LIKE:
-                return builder.like(field, value);
+                return builder.like(field, "%" + value + "%");
             case NLIKE:
                 return builder.notLike(field, "%" + value + "%");
         }

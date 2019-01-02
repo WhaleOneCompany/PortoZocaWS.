@@ -24,21 +24,21 @@ import java.util.List;
  */
 public class SearchCriteria {
 
-    private List<SearchParam> itens;
+    private List<SearchParam> items;
 
-    public List<SearchParam> getItens() {
-        return itens;
+    public List<SearchParam> getItems() {
+        return items;
     }
 
-    public void setItens(List<SearchParam> itens) {
-        this.itens = itens;
+    public void setItems(List<SearchParam> items) {
+        this.items = items;
     }
 
     public final SearchParam get(int idx) {
-        return itens.get(idx);
+        return items.get(idx);
     }
 
     public final boolean isEmpty() {
-        return this.itens == null || this.itens.isEmpty();
+        return this.items == null || this.items.isEmpty();
     }
 }

@@ -17,16 +17,15 @@
 package br.com.portozoca.core.search;
 
 /**
- *
- * @author jonas
+ * Search operators
  */
 public enum SearchOperator {
 
     EQ, NEQ, GT, LT, GTE, LTE, LIKE, NLIKE;
 
-    public SearchOperator valueof(String other) {
+    public SearchOperator valueOf(Object other) {
         for (SearchOperator v : values()) {
-            if (v.name().equalsIgnoreCase(other)) {
+            if (v.name().equalsIgnoreCase(other.toString())) {
                 return v;
             }
         }

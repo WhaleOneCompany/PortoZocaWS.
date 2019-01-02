@@ -23,32 +23,27 @@ package br.com.portozoca.core.search;
 public class SearchParam {
 
     private String key;
-    private SearchOperator operator;
+    private SearchOperator op;
     private Object value;
 
     public void setKey(String key) {
         this.key = key;
     }
 
-    public void setOperator(SearchOperator operator) {
-        this.operator = operator;
+    public void setOp(SearchOperator op) {
+        this.op = op;
     }
 
     public void setValue(Object value) {
         this.value = value;
     }
 
-//    public SearchParam(String key, SearchOperator operator, String value) {
-//        this.key = key;
-//        this.operator = operator;
-//        this.value = value;
-//    }
     public String getKey() {
         return key;
     }
 
-    public SearchOperator getOperator() {
-        return operator;
+    public SearchOperator getOp() {
+        return op;
     }
 
     public Object getValue() {

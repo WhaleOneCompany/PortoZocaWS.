@@ -50,8 +50,4 @@ public class Sample extends ImportableEntity {
         return this;
     }
 
-    @Override
-    public String toString() {
-        return "Sample{" + "Id=" + id + " name=" + name + " version=" + version + '}';
-    }
 }

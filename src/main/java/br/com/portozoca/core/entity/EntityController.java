@@ -31,6 +31,7 @@ import org.springframework.http.ResponseEntity;
 import br.com.portozoca.core.db.BaseEntity;
 import br.com.portozoca.core.search.SearchCriteria;
 import br.com.portozoca.core.search.SearchSpecification;
+import br.com.portozoca.core.search.SearchCriteriaFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
@@ -38,7 +39,6 @@ import org.springframework.hateoas.PagedResources;
 import org.springframework.http.MediaType;
 import javax.transaction.Transactional;
 import org.springframework.lang.Nullable;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -52,6 +52,8 @@ public class EntityController {
     private EntityPersistor persistence;
     @Autowired
     private EntityQuerier query;
+    @Autowired
+    private SearchCriteriaFactory searchFactory;
     @Autowired
     private PagedResourcesAssembler assembler;
 
@@ -80,8 +82,10 @@ public class EntityController {
      * @return ResponseEntity
      */
     @GetMapping
-    public ResponseEntity<PagedResources> read(@PathVariable String entity, @Nullable @RequestParam(value = "search") SearchCriteria search, Pageable pageable) {
-        Page page = query.findAll(entity, SearchSpecification.toSpec(search), pageable);
+    public ResponseEntity<PagedResources> read(@PathVariable String entity, Pageable pageable,
+            @Nullable @RequestParam String search) {
+        SearchCriteria criteria = searchFactory.create(search);
+        Page page = query.findAll(entity, SearchSpecification.toSpec(criteria), pageable);
         return new ResponseEntity<>(assembler.toResource(page), HttpStatus.OK);
     }
 
