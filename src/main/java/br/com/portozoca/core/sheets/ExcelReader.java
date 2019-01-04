@@ -17,7 +17,6 @@
 package br.com.portozoca.core.sheets;
 
 import br.com.portozoca.core.error.ImportationException;
-import br.com.portozoca.core.db.ImportableEntity;
 import br.com.portozoca.core.i18n.MessageSourceExternalizer;
 import java.io.File;
 import java.io.IOException;
@@ -38,6 +37,17 @@ public class ExcelReader {
 
     @Autowired
     private MessageSourceExternalizer msgs;
+    /** Indicates if the first line is a header and must be ignored */
+    private boolean firstLineIsHeader = false;
+    
+    /**
+     * Config the reader
+     * 
+     * @param firstLineIsHeader 
+     */
+    public void config(boolean firstLineIsHeader) {
+        this.firstLineIsHeader = firstLineIsHeader;
+    }
 
     /**
      * Read the excel file
@@ -49,7 +59,7 @@ public class ExcelReader {
      * @return Data
      * @throws ImportationException
      */
-    public <T extends ImportableEntity> Data<T> read(String filename, int page, Class<T> clazz) throws ImportationException {
+    public <T extends Importable> Data<T> read(String filename, int page, Class<T> clazz) throws ImportationException {
         try {
             Workbook workbook = WorkbookFactory.create(new File(filename));
             return read(workbook, page, clazz);
@@ -70,12 +80,16 @@ public class ExcelReader {
      * @return Data
      * @throws ImportationException
      */
-    public <T extends ImportableEntity> Data<T> read(Workbook workbook, int page, Class<T> clazz) throws ImportationException {
+    public <T extends Importable> Data<T> read(Workbook workbook, int page, Class<T> clazz) throws ImportationException {
         try {
             Data<T> data = new Data();
             Sheet sheet = workbook.getSheetAt(page);
+            int line = 0;
             for (Row row : sheet) {
-                data.add(buildRecord(row, clazz));
+                if (!firstLineIsHeader || line > 0) {
+                    data.add(buildRecord(row, clazz));
+                }
+                line++;
             }
             return data;
         } catch (EncryptedDocumentException ex) {
@@ -92,7 +106,7 @@ public class ExcelReader {
      * @return T
      * @throws ImportationException
      */
-    private <T extends ImportableEntity> T buildRecord(Row row, Class<T> clazz) throws ImportationException {
+    private <T extends Importable> T buildRecord(Row row, Class<T> clazz) throws ImportationException {
         try {
             return (T) clazz.newInstance().buildFromRow(row);
         } catch (InstantiationException | IllegalAccessException ex) {

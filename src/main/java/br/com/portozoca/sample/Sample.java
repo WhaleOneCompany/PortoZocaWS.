@@ -16,7 +16,8 @@
  */
 package br.com.portozoca.sample;
 
-import br.com.portozoca.core.db.ImportableEntity;
+import br.com.portozoca.core.db.BaseEntity;
+import br.com.portozoca.core.sheets.Importable;
 import br.com.portozoca.core.utils.ExcelRowInterpreter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,7 +29,7 @@ import org.springframework.stereotype.Component;
  */
 @Entity(name = "Sample")
 @Component("sample")
-public class Sample extends ImportableEntity {
+public class Sample extends BaseEntity implements Importable{
 
     @Column
     private String name;
@@ -42,7 +43,7 @@ public class Sample extends ImportableEntity {
     }
 
     @Override
-    public ImportableEntity buildFromRow(Row row) {
+    public Importable buildFromRow(Row row) {
         String[] cell = ExcelRowInterpreter.interpreter(row).toArray(new String[] {});
         this.id = Long.parseLong(cell[0]);
         this.name = cell[1];
@@ -50,4 +51,8 @@ public class Sample extends ImportableEntity {
         return this;
     }
 
+    @Override
+    public String toString() {
+        return "Sample{" + "Id=" + id + " name=" + name + " version=" + version + '}';
+    }
 }

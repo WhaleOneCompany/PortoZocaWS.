@@ -50,6 +50,9 @@ public class EntityService {
      * @param entity
      * @return DAORepository
      */
+    public final <T> DAORepository<T>  repository(Class<T> clazz) {
+        return (DAORepository<T>) repository(name(clazz.getSimpleName()));
+    }
     public final DAORepository<? extends BaseEntity> repository(String entity) {
         String key = name(entity).concat(REPOSITORY);
         if (!daos.containsKey(key)) {

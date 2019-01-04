@@ -14,42 +14,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.com.portozoca.entity.imported;
+package br.com.portozoca.importation;
 
-import br.com.portozoca.core.db.ImportableEntity;
+import br.com.portozoca.core.sheets.Importable;
 import br.com.portozoca.core.utils.ExcelRowInterpreter;
-import javax.persistence.Column;
-import javax.persistence.Entity;
 import org.apache.poi.ss.usermodel.Row;
-import org.springframework.stereotype.Component;
 
 /**
  * Class to represent a imported register
  */
-@Entity
-@Component("imported")
-public class Imported extends ImportableEntity {
+public class ImportedRecord implements Importable, Comparable<ImportedRecord> {
 
     /** Bill of lading */
-    @Column
     private String bl;
     /** Customer */
-    @Column
     private String customer;
     /** Product */
-    @Column
     private String product;
     /** Serie */
-    @Column
     private String serie;
     /** Gross weight */
-    @Column
-    private Long grossWeight;
+    private Float grossWeight;
     /** Net weight */
-    @Column
-    private Long netWeight;
+    private Float netWeight;
     /** Ship */
-    @Column
     private String ship;
 
     public String getBl() {
@@ -84,19 +72,19 @@ public class Imported extends ImportableEntity {
         this.serie = serie;
     }
 
-    public Long getGrossWeight() {
+    public Float getGrossWeight() {
         return grossWeight;
     }
 
-    public void setGrossWeight(Long grossWeight) {
+    public void setGrossWeight(Float grossWeight) {
         this.grossWeight = grossWeight;
     }
 
-    public Long getNetWeight() {
+    public Float getNetWeight() {
         return netWeight;
     }
 
-    public void setNetWeight(Long netWeight) {
+    public void setNetWeight(Float netWeight) {
         this.netWeight = netWeight;
     }
 
@@ -109,24 +97,29 @@ public class Imported extends ImportableEntity {
     }
 
     @Override
-    public ImportableEntity buildFromRow(Row row) {
+    public Importable buildFromRow(Row row) {
         String[] cells = ExcelRowInterpreter.interpreter(row).toArray(new String[] {});
         bl = cells[1];
         customer = cells[4];
         product = cells[5];
         serie = cells[6];
         try {
-            grossWeight = Long.parseLong(cells[9]);
+            grossWeight = Float.parseFloat(cells[9]);
         } catch (NumberFormatException ex) {
-            grossWeight = 0L;
+            grossWeight = 0F;
         }
         try {
-            netWeight = Long.parseLong(cells[10]);
+            netWeight = Float.parseFloat(cells[10]);
         } catch (NumberFormatException ex) {
-            netWeight = 0L;
+            netWeight = 0F;
         }
         ship = cells[11];
         return this;
+    }
+
+    @Override
+    public int compareTo(ImportedRecord o) {
+        return this.getBl().compareTo(o.getBl());
     }
 
 }

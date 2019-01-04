@@ -18,6 +18,7 @@ package br.com.portozoca.entity.dimension;
 
 import br.com.portozoca.core.db.AuditedEntity;
 import br.com.portozoca.entity.itemsofbl.ItemsOfBl;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -39,8 +40,11 @@ public class Dimension extends AuditedEntity {
     @Column
     private String thickness;
     /** Item of bill of landing */
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "itemOfBl_id")
+    @OneToOne(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
+    )
+    @JoinColumn(name = "itemsOfBl_id")
     private ItemsOfBl itemOfBl;
 
     public Float getWeight() {

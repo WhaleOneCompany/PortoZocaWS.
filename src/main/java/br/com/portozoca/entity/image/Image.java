@@ -37,9 +37,6 @@ public class Image extends AuditedEntity {
             unique = true
     )
     private String url;
-    /** Item of bill of landing reference */
-    @Column(nullable = false)
-    private Long itemOfBl;
     /** Item of bill of landing */
     @ManyToOne
     @JoinColumn(name = "itemOfBl_id")
@@ -51,14 +48,6 @@ public class Image extends AuditedEntity {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public Long getItemOfBl() {
-        return itemOfBl;
-    }
-
-    public void setItemOfBl(Long itemOfBl) {
-        this.itemOfBl = itemOfBl;
     }
 
     public ItemsOfBl getItem() {

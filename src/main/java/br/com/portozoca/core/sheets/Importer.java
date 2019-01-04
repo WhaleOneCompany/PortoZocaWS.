@@ -17,7 +17,6 @@
 package br.com.portozoca.core.sheets;
 
 import br.com.portozoca.core.error.ImportationException;
-import br.com.portozoca.core.db.ImportableEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +28,17 @@ public class Importer {
 
     @Autowired
     private ExcelReader excel;
-
+    /** Indicates if the first line of the file is a header */
+    private boolean firstLineIsHeader = false;
+    
+    /**
+     * Configure the importer
+     * 
+     * @param firstLineIsHeader 
+     */
+    public void config(boolean firstLineIsHeader) {
+        this.firstLineIsHeader = firstLineIsHeader;
+    }
     /**
      * Import Excel file
      *
@@ -39,8 +48,9 @@ public class Importer {
      * @return Datas
      * @throws br.com.portozoca.core.error.ImportationException
      */
-    public <T extends ImportableEntity> Data<T> fromExcel(String file, Class<T> clazz) throws ImportationException {
+    public <T extends Importable> Data<T> fromExcel(String file, Class<T> clazz) throws ImportationException {
+        excel.config(firstLineIsHeader);
         return excel.read(file, 0, clazz);
     }
-
+    
 }

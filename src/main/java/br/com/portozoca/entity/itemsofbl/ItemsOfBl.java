@@ -44,12 +44,9 @@ import org.springframework.stereotype.Component;
 @Entity
 @Component("itemsofbl")
 @Table(uniqueConstraints = {
-    @UniqueConstraint(columnNames = { "bl", "serie" }), })
+    @UniqueConstraint(columnNames = { "billOfLading_id", "serie" }), })
 public class ItemsOfBl extends AuditedEntity {
 
-    /** Bill Of Lading reference */
-    @Column(nullable = false)
-    private Long bl;
     /** Serie of product */
     @Column(nullable = false)
     private String serie;
@@ -61,9 +58,6 @@ public class ItemsOfBl extends AuditedEntity {
     @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Date conferenceDate;
-    /** Dimension reference */
-    @Column
-    private Long dimension;
     /** Observation */
     @Column
     private String observation;
@@ -76,25 +70,19 @@ public class ItemsOfBl extends AuditedEntity {
     @JoinColumn(name = "billOfLading_id")
     private BillOfLading billOfLading;
     /** Dimension */
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL
+    )
     @JoinColumn(name = "dimension_id")
-    private Dimension dimensionObj;
+    private Dimension dimension;
     /** Images */
     @OneToMany(
-            mappedBy = "itemOfBl",
-            targetEntity = Image.class,
+            mappedBy = "item",
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL
     )
     private List<Image> images;
-
-    public Long getBl() {
-        return bl;
-    }
-
-    public void setBl(Long bl) {
-        this.bl = bl;
-    }
 
     public String getSerie() {
         return serie;
@@ -120,11 +108,11 @@ public class ItemsOfBl extends AuditedEntity {
         this.conferenceDate = conferenceDate;
     }
 
-    public Long getDimension() {
+    public Dimension getDimension() {
         return dimension;
     }
 
-    public void setDimension(Long dimension) {
+    public void setDimension(Dimension dimension) {
         this.dimension = dimension;
     }
 
@@ -150,14 +138,6 @@ public class ItemsOfBl extends AuditedEntity {
 
     public void setBillOfLading(BillOfLading billOfLading) {
         this.billOfLading = billOfLading;
-    }
-
-    public Dimension getDimensionObj() {
-        return dimensionObj;
-    }
-
-    public void setDimensionObj(Dimension dimensionObj) {
-        this.dimensionObj = dimensionObj;
     }
 
     public List<Image> getImages() {

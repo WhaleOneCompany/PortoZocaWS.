@@ -18,12 +18,16 @@ package br.com.portozoca.entity.billoflading;
 
 import br.com.portozoca.core.db.AuditedEntity;
 import br.com.portozoca.entity.itemsofbl.ItemsOfBl;
+import br.com.portozoca.entity.itemsofbl.ItemsOfBlStatus;
+import br.com.portozoca.entity.travel.Travel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -34,81 +38,81 @@ import org.springframework.stereotype.Component;
  */
 @Entity
 @Table(uniqueConstraints = {
-    @UniqueConstraint(columnNames = { "travel", "bl", "customer" })
+    @UniqueConstraint(columnNames = { "travel_id", "bl", "customer" })
 })
 @Component("billoflading")
 public class BillOfLading extends AuditedEntity {
 
-    /** Travel reference */
-    @Column(nullable = false)
-    private Long travel;
     /** BL */
     @Column(nullable = false)
     private String bl;
     @Column
     private String customer;
     /** Manifested quantity */
-    @Column
     private Long manifested;
     /** Conferred quantity */
-    @Column
     private Long conferred;
     /** Items of bill of lading */
     @OneToMany(
-            mappedBy = "bl",
-            targetEntity = ItemsOfBl.class,
+            mappedBy = "billOfLading",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
     @JsonIgnore
     private List<ItemsOfBl> items;
-
-    public Long getTravel() {
-        return travel;
-    }
-
-    public void setTravel(Long travel) {
-        this.travel = travel;
-    }
-
+    /** Travel */
+    @ManyToOne
+    @JoinColumn(name = "travel_id")
+    private Travel travel;
+    
     public String getBl() {
         return bl;
     }
 
-    public void setBl(String bl) {
+    public BillOfLading setBl(String bl) {
         this.bl = bl;
+        return this;
     }
 
     public String getCustomer() {
         return customer;
     }
 
-    public void setCustomer(String customer) {
+    public BillOfLading setCustomer(String customer) {
         this.customer = customer;
+        return this;
     }
 
     public Long getManifested() {
+        manifested = getItems().stream().filter((t) -> {
+            return t.getStatus().equals(ItemsOfBlStatus.MANIFESTED);
+        }).count();
         return manifested;
     }
 
-    public void setManifested(Long manifested) {
-        this.manifested = manifested;
-    }
-
     public Long getConferred() {
+        conferred = getItems().stream().filter((t) -> {
+            return t.getStatus().equals(ItemsOfBlStatus.CONFERRED);
+        }).count();
         return conferred;
-    }
-
-    public void setConferred(Long conferred) {
-        this.conferred = conferred;
     }
 
     public List<ItemsOfBl> getItems() {
         return items;
     }
 
-    public void setItems(List<ItemsOfBl> items) {
+    public BillOfLading setItems(List<ItemsOfBl> items) {
         this.items = items;
+        return this;
     }
 
+    public Travel getTravel() {
+        return travel;
+    }
+
+    public BillOfLading setTravel(Travel travel) {
+        this.travel = travel;
+        return this;
+    }
+    
 }

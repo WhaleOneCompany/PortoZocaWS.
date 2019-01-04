@@ -17,11 +17,18 @@
 package br.com.portozoca.entity.travel;
 
 import br.com.portozoca.core.db.AuditedEntity;
+import br.com.portozoca.entity.billoflading.BillOfLading;
+import br.com.portozoca.entity.itemsofbl.ItemsOfBl;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -55,6 +62,14 @@ public class Travel extends AuditedEntity {
     @Column
     @Enumerated(EnumType.ORDINAL)
     private TravelStatus status;
+        @OneToMany(
+            mappedBy = "travel",
+            targetEntity = BillOfLading.class,
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    @JsonIgnore
+    private List<BillOfLading> bls;
 
     public String getShip() {
         return ship;
@@ -96,4 +111,12 @@ public class Travel extends AuditedEntity {
         this.status = status;
     }
 
+    public List<BillOfLading> getBls() {
+        return bls;
+    }
+
+    public void setBls(List<BillOfLading> bls) {
+        this.bls = bls;
+    }
+    
 }

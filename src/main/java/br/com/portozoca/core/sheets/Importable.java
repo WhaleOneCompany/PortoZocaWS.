@@ -16,7 +16,6 @@
  */
 package br.com.portozoca.core.sheets;
 
-import br.com.portozoca.core.db.ImportableEntity;
 import org.apache.poi.ss.usermodel.Row;
 
 /**
@@ -24,6 +23,6 @@ import org.apache.poi.ss.usermodel.Row;
  */
 public interface Importable {
 
-    public abstract ImportableEntity buildFromRow(Row row);
+    public abstract Importable buildFromRow(Row row);
 
 }
