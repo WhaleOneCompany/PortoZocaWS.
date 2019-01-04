@@ -25,7 +25,7 @@ public enum TravelStatus {
     PENDING,
     CHECKED;
 
-    public TravelStatus valueof(Object other) {
+    public TravelStatus valueOf(Object other) {
         for (TravelStatus t : values()) {
             if (t.name().equalsIgnoreCase(other.toString())) {
                 return t;

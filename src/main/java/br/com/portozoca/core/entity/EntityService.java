@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -38,12 +37,10 @@ public class EntityService {
 
     /** All entity DAOs */
     @Autowired
-    private @Nullable
-    Map<String, DAORepository<? extends BaseEntity>> daos;
+    private Map<String, DAORepository<? extends BaseEntity>> daos;
 
     @Autowired
-    private @Nullable
-    Map<String, Class<? extends BaseEntity>> entities;
+    private Map<String, BaseEntity> entities;
     @Autowired
     private ObjectMapper mapper;
 
@@ -71,8 +68,21 @@ public class EntityService {
      * @throws br.com.portozoca.core.error.ResourceException
      */
     public final <T extends BaseEntity> T object(String entity, String body) throws ResourceException {
+        return object(clazz(entity), body);
+    }
+
+    /**
+     * Casts the json body string to it's entity class
+     *
+     * @param <T>
+     * @param clazz
+     * @param body
+     * @return BaseEntity
+     * @throws br.com.portozoca.core.error.ResourceException
+     */
+    public final <T extends BaseEntity> T object(Class<? extends BaseEntity> clazz, String body) throws ResourceException {
         try {
-            return (T) mapper.readValue(body, clazz(entity));
+            return (T) mapper.readValue(body, clazz);
         } catch (IOException ex) {
             throw new ResourceException();
         }
@@ -86,11 +96,21 @@ public class EntityService {
      * @throws br.com.portozoca.core.error.ResourceException
      */
     public final Class<? extends BaseEntity> clazz(String entity) throws ResourceException {
-        Class<? extends BaseEntity> get = entities.get(name(entity));
+        BaseEntity get = entities.get(name(entity));
         if (get == null) {
             throw new ResourceException();
         }
-        return get;
+        return (Class<? extends BaseEntity>) get.getClass();
+    }
+
+    /**
+     * Returns the formated entity name
+     *
+     * @param entityClazz
+     * @return String
+     */
+    public final String name(Class<? extends BaseEntity> entityClazz) {
+        return entityClazz.getSimpleName().toLowerCase();
     }
 
     /**

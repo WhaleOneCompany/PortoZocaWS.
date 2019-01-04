@@ -28,7 +28,7 @@
         "customer": "WHALE TWO"
     }, {
         "_class": "br.com.portozoca.entity.billoflading.BillOfLading",
-        "travel": 1,
+        "travel": 2,
         "bl": "BR2018B173",
         "customer": "WHALE ONE"
     }, {
