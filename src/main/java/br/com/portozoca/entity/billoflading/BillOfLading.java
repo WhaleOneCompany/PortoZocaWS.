@@ -30,6 +30,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import org.springframework.stereotype.Component;
 
@@ -37,9 +38,9 @@ import org.springframework.stereotype.Component;
  * Moviment Bean to represent a BL Moviment register
  */
 @Entity
-@Table(uniqueConstraints = {
-    @UniqueConstraint(columnNames = { "travel_id", "bl", "customer" })
-})
+//@Table(uniqueConstraints = {
+//    @UniqueConstraint(columnNames = { "travel_id", "bl", "customer" })
+//})
 @Component("billoflading")
 public class BillOfLading extends AuditedEntity {
 
@@ -49,8 +50,10 @@ public class BillOfLading extends AuditedEntity {
     @Column
     private String customer;
     /** Manifested quantity */
+    @Transient
     private Long manifested;
     /** Conferred quantity */
+    @Transient
     private Long conferred;
     /** Items of bill of lading */
     @OneToMany(
@@ -62,7 +65,10 @@ public class BillOfLading extends AuditedEntity {
     private List<ItemsOfBl> items;
     /** Travel */
     @ManyToOne
-    @JoinColumn(name = "travel_id")
+    @JoinColumn(
+            name = "travel_id"
+            //nullable = false
+    )
     private Travel travel;
     
     public String getBl() {

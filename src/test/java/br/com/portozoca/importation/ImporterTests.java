@@ -49,8 +49,9 @@ public class ImporterTests {
     @Test
     public void excelImportarion() throws ImportationException, URISyntaxException {
         File file = new File(getClass().getClassLoader().getResource(DATA_EXCEL).toURI());
+        importer.config(false);
         Data data = importer.fromExcel(file.getAbsolutePath(), Sample.class);
-        Long line = new Long(0);
+        Long line = 0L;
         for (Sample s: (List<Sample>) data.getData()) {
             line++;
             Assert.assertEquals(line, s.getId());

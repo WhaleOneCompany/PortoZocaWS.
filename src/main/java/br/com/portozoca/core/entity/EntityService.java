@@ -39,8 +39,8 @@ public class EntityService {
     @Autowired
     private Map<String, DAORepository<? extends BaseEntity>> daos;
 
-    @Autowired
-    private Map<String, BaseEntity> entities;
+    //@Autowired
+    //private Map<String, BaseEntity> entities;
     @Autowired
     private ObjectMapper mapper;
 
@@ -99,11 +99,12 @@ public class EntityService {
      * @throws br.com.portozoca.core.error.ResourceException
      */
     public final Class<? extends BaseEntity> clazz(String entity) throws ResourceException {
-        BaseEntity get = entities.get(name(entity));
-        if (get == null) {
-            throw new ResourceException();
-        }
-        return (Class<? extends BaseEntity>) get.getClass();
+//        BaseEntity get = entities.get(name(entity));
+//        if (get == null) {
+//            throw new ResourceException();
+//        }
+//        return (Class<? extends BaseEntity>) get.getClass();
+          return null;
     }
 
     /**

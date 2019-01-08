@@ -64,7 +64,6 @@ public class Travel extends AuditedEntity {
     private TravelStatus status;
         @OneToMany(
             mappedBy = "travel",
-            targetEntity = BillOfLading.class,
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )

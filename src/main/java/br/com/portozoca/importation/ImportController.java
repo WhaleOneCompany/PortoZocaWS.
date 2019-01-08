@@ -18,7 +18,13 @@ package br.com.portozoca.importation;
 
 import br.com.portozoca.core.entity.EntityPersistor;
 import br.com.portozoca.core.entity.EntityService;
+import br.com.portozoca.core.error.ImportationException;
 import br.com.portozoca.core.error.ResourceException;
+import br.com.portozoca.core.sheets.Importer;
+import br.com.portozoca.core.utils.Files;
+import br.com.portozoca.entity.travel.Travel;
+import java.io.File;
+import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,8 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- *
- * @author Perin
+ * Controller to import a xls
  */
 @RestController
 public class ImportController {
@@ -38,7 +43,10 @@ public class ImportController {
     private EntityService entities;
     @Autowired
     private EntityPersistor persistor;
-
+    @Autowired
+    private Importer importer;    
+    
+    
     /**
      * Import a travel
      *
@@ -51,11 +59,17 @@ public class ImportController {
     @PostMapping("v1/import/xls")
     public ResponseEntity importTravel(
             @RequestParam MultipartFile file,
-            @RequestParam String travel, @RequestParam String ship) throws ResourceException {
+            @RequestParam String travel, @RequestParam String ship) throws ResourceException, IOException, ImportationException {
         System.out.println("File: " + file.getOriginalFilename());
         System.out.println("Travel: " + travel);
         System.out.println("Ship: " + ship);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        byte[] fromStream = Files.fromStream(file.getInputStream());
+        File f = Files.save("C:\\TMP\\" + travel + "_" + ship, fromStream);
+        importer.config(true);
+        Imported imp = new Imported(f.getAbsolutePath(), importer);
+        Travel t = imp.buildTravel("Ship", "Travel");
+        entities.repository(Travel.class).save(t);
+        return ResponseEntity.status(HttpStatus.CREATED).body(t);
     }
 
 }

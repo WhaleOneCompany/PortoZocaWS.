@@ -51,7 +51,7 @@ public class Imported {
         Travel t = new Travel();
         t.setTravel(travel);
         t.setShip(ship);
-        t.setBls(new ArrayList<BillOfLading>());
+        t.setBls(new ArrayList<>());
         String s_bl = "";
         BillOfLading bl = null;
         for (ImportedRecord record: records.getData()) {
@@ -64,7 +64,7 @@ public class Imported {
                 bl.setBl(s_bl);
                 bl.setTravel(t);
                 bl.setCustomer(record.getCustomer());
-                bl.setItems(new ArrayList<ItemsOfBl>());
+                bl.setItems(new ArrayList<>());
             }
             bl.getItems().add(buildItemOfBl(bl, record));
         }
