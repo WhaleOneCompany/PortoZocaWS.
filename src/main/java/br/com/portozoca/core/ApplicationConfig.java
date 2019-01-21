@@ -16,11 +16,13 @@
  */
 package br.com.portozoca.core;
 
+import br.com.portozoca.PortoZocaWS;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import java.util.Locale;
+import org.reflections.Reflections;
 
 /**
  * Allow to use command line args to configure the app and specialize spring
@@ -31,6 +33,8 @@ public final class ApplicationConfig {
 
     /** Application default locale */
     private static final Locale DEF_LOCALE = new Locale("pt", "BR");
+    /** Pacote base da aplicação */
+    private static final String BASE_PKG = PortoZocaWS.class.getPackage().getName();
 
     /**
      * Realiza a configuração
@@ -51,6 +55,16 @@ public final class ApplicationConfig {
         SessionLocaleResolver slr = new SessionLocaleResolver();
         slr.setDefaultLocale(DEF_LOCALE);
         return slr;
+    }
+
+    /**
+     * Reflections lib bean
+     *
+     * @return Reflections
+     */
+    @Bean
+    public Reflections reflections() {
+        return new Reflections(BASE_PKG);
     }
 
 }

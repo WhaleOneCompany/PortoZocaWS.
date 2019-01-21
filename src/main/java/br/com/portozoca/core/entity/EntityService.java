@@ -22,7 +22,10 @@ import br.com.portozoca.core.error.ResourceException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.security.InvalidParameterException;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
+import org.reflections.Reflections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,11 +41,21 @@ public class EntityService {
     /** All entity DAOs */
     @Autowired
     private Map<String, DAORepository<? extends BaseEntity>> daos;
+    /** All entity class names */
+    private Set<Class<? extends BaseEntity>> entities;
 
-    //@Autowired
-    //private Map<String, BaseEntity> entities;
     @Autowired
     private ObjectMapper mapper;
+
+    /**
+     * Returns the repository (DAO) of the desired entity
+     *
+     * @param clazz
+     * @return DAORepository
+     */
+    public final <T> DAORepository<T> repository(Class<T> clazz) {
+        return (DAORepository<T>) repository(name(clazz.getSimpleName()));
+    }
 
     /**
      * Returns the repository (DAO) of the desired entity
@@ -50,9 +63,6 @@ public class EntityService {
      * @param entity
      * @return DAORepository
      */
-    public final <T> DAORepository<T>  repository(Class<T> clazz) {
-        return (DAORepository<T>) repository(name(clazz.getSimpleName()));
-    }
     public final DAORepository<? extends BaseEntity> repository(String entity) {
         String key = name(entity).concat(REPOSITORY);
         if (!daos.containsKey(key)) {
@@ -83,7 +93,8 @@ public class EntityService {
      * @return BaseEntity
      * @throws br.com.portozoca.core.error.ResourceException
      */
-    public final <T extends BaseEntity> T object(Class<? extends BaseEntity> clazz, String body) throws ResourceException {
+    public final <T extends BaseEntity> T object(Class<? extends BaseEntity> clazz, String body) throws
+            ResourceException {
         try {
             return (T) mapper.readValue(body, clazz);
         } catch (IOException ex) {
@@ -99,12 +110,25 @@ public class EntityService {
      * @throws br.com.portozoca.core.error.ResourceException
      */
     public final Class<? extends BaseEntity> clazz(String entity) throws ResourceException {
-//        BaseEntity get = entities.get(name(entity));
-//        if (get == null) {
-//            throw new ResourceException();
-//        }
-//        return (Class<? extends BaseEntity>) get.getClass();
-          return null;
+        Iterator<Class<? extends BaseEntity>> it = entities.iterator();
+        while (it.hasNext()) {
+            Class<? extends BaseEntity> e = it.next();
+            if (e.getSimpleName().equals(name(entity))) {
+                return e;
+            }
+        }
+        throw new ResourceException();
+    }
+
+    /**
+     * Retruns the full name of the class, including the package, according to the entity
+     *
+     * @param entity
+     * @return Class
+     * @throws br.com.portozoca.core.error.ResourceException
+     */
+    public final String packageClass(String entity) throws ResourceException {
+        return clazz(entity).getPackage().getName();
     }
 
     /**
@@ -125,6 +149,16 @@ public class EntityService {
      */
     public final String name(String entity) {
         return entity.toLowerCase();
+    }
+
+    /**
+     * Inject all the entities via Reflections API
+     *
+     * @param reflections
+     */
+    @Autowired
+    public void setEntidades(Reflections reflections) {
+        this.entities = reflections.getSubTypesOf(BaseEntity.class);
     }
 
 }
