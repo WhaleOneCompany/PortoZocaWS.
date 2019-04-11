@@ -113,7 +113,7 @@ public class EntityService {
         Iterator<Class<? extends BaseEntity>> it = entities.iterator();
         while (it.hasNext()) {
             Class<? extends BaseEntity> e = it.next();
-            if (e.getSimpleName().equals(name(entity))) {
+            if (e.getSimpleName().equalsIgnoreCase(name(entity))) {
                 return e;
             }
         }

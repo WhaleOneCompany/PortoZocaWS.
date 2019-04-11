@@ -48,7 +48,7 @@ public class MultipartController {
             @RequestParam @Nullable MultipartFile file,
             @RequestParam String body
     ) throws MultipartException {
-        multiparts.saveAndStore(entity, body, file);
+                multiparts.saveAndStore(entity, body, file);
         return ResponseEntity.ok().build();
     }
 

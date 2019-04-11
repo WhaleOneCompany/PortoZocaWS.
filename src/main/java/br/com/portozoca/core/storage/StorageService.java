@@ -16,8 +16,13 @@
  */
 package br.com.portozoca.core.storage;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,6 +39,11 @@ public final class StorageService {
     }
 
     public void save(MultipartFile file) {
+        try {
+            file.transferTo(new File("/tmp/zoca/" + file.getOriginalFilename()));
+        } catch (Exception ex) {
+            throw new RuntimeException("deu pau", ex);
+        }
         files.add(file.getOriginalFilename());
     }
 
